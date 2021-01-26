@@ -2,17 +2,21 @@ plugins {
   id 'java'
   id 'jacoco'
   id 'application'
+  id 'checkstyle'
   id 'org.openjfx.javafxplugin' version '0.0.9'
 }
 
 
-mainClassName = 'PathFinder.Main'
+mainClassName = 'pathFinder.Main'
 
 
 repositories {
     jcenter()
 }
 
+checkstyleMain.exclude ('pathFinder/Main.java')
+
+checkstyleMain.exclude ('pathFinder/UI.java')
 
 dependencies {
     testCompile 'junit:junit:4.12'

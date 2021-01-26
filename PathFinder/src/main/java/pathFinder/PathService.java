@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package PathFinder;
+package pathFinder;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class PathService {
     
-    public int[][] map;
+    private int[][] map;
     
     public PathService() {
         
@@ -42,16 +42,16 @@ public class PathService {
         List<Node> path = astar.findPathTo(xend, yend);
         if (path != null) {
             path.forEach((n) -> {
-                System.out.print("[" + n.x + ", " + n.y + "] ");
-                this.map[n.y][n.x] = 1;
+                System.out.print("[" + n.getX() + ", " + n.getY() + "] ");
+                this.map[n.getY()][n.getX()] = 1;
             });
         } else {
             return 0;
         }
         System.out.println();
-        for (int[] maze_row : map) {
-            for (int maze_entry : maze_row) {
-                switch (maze_entry) {
+        for (int[] mazerow : map) {
+            for (int mazeentry : mazerow) {
+                switch (mazeentry) {
                     case 0:
                         System.out.print("_");
                         break;
@@ -71,10 +71,10 @@ public class PathService {
     public void drawPath() {
         List<String> lines = new ArrayList<>();
         String line = "";
-        for (int[] map_row : map) {
-            for (int map_entry : map_row) {
+        for (int[] maprow : map) {
+            for (int mapentry : maprow) {
                 String c = "";
-                switch (map_entry) {
+                switch (mapentry) {
                     case 0:
                         c = ".";
                         break;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package PathFinder;
+package pathFinder;
 
 /**
  *
@@ -11,11 +11,12 @@ package PathFinder;
  */
 public class Node implements Comparable {
     
-        public Node parent;
-        public int x, y;
-        public double g;
-        public double h;
-        public Node (Node parent, int xpos, int ypos, double g, double h) {
+        private Node parent;
+        private int x, y;
+        private double g;
+        private double h;
+        
+        public Node(Node parent, int xpos, int ypos, double g, double h) {
             this.parent = parent;
             this.x = xpos;
             this.y = ypos;
@@ -23,10 +24,14 @@ public class Node implements Comparable {
             this.h = h;
        }
 
+    public Node getParent() {
+        return parent;
+    }
+
     @Override
     public int compareTo(Object o) {
         Node that = (Node) o;
-        return (int)((this.g + this.h) - (that.g + that.h));
+        return (int) ((this.g + this.h) - (that.g + that.h));
     }
 
     public double getG() {
@@ -44,6 +49,11 @@ public class Node implements Comparable {
     public int getY() {
         return y;
     }
+
+    public void setG(double g) {
+        this.g = g;
+    }
+
     
 }
 

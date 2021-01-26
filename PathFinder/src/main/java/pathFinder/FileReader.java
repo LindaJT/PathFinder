@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package PathFinder;
+package pathFinder;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -16,10 +16,11 @@ import java.util.Scanner;
  */
 public class FileReader {
     
-    int[][] map = new int[0][0];
-    List<String> lines = new ArrayList<>();
+    private int[][] map;
+    private List<String> lines = new ArrayList<>();
     
     public FileReader() {
+        this.map = new int[0][0];
         
     }
     
@@ -38,8 +39,8 @@ public class FileReader {
             System.out.println("Virhe " + e.getMessage());
         }
 
-        for(int i = 0; i < lines.size(); i++) {
-            for(int x = 0; x < lines.get(i).length(); x++) {
+        for (int i = 0; i < lines.size(); i++) {
+            for (int x = 0; x < lines.get(i).length(); x++) {
                 if (lines.get(i).charAt(x) == '.') {
                     this.map[i][x] = 0;
                 } else {
