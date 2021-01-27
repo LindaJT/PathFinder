@@ -6,7 +6,7 @@
 package pathFinder;
 
 /**
- *
+ * Node of the map
  * @author linjokin
  */
 public class Node implements Comparable {

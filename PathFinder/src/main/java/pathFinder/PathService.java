@@ -20,9 +20,15 @@ public class PathService {
     private int[][] map;
     
     public PathService() {
-        
+        this.map = new int[0][0];
     }
     
+    /**
+     * Calls FileReader's file reading method.
+     * 
+     * @param fileName name of the file to be read
+     * @return true if file was read and converted to a map array correctly
+     */
     public boolean readFile(String fileName) {
         FileReader reader = new FileReader();
         this.map = reader.readFile(fileName);
@@ -32,6 +38,15 @@ public class PathService {
         return true;
     }
     
+    /**
+     * Calculating distance of the shortest path
+     * 
+     * @param xstart start point x coordinate
+     * @param ystart start point y coordinate
+     * @param xend goal point x coordinate
+     * @param yend goal point y coordinate
+     * @return distance of the shortest path
+     */
     public int aStarDistance(int xstart, int ystart, int xend, int yend) {
         if (xstart == xend && ystart == yend) {
             return 0;
@@ -67,7 +82,15 @@ public class PathService {
         int distance = (int) path.get(path.size() - 1).getG();
         return distance;
     }
+
+    public int[][] getMap() {
+        return map;
+    }
     
+    /**
+     * For visualization
+     * Writes the map with the path on a file
+     */
     public void drawPath() {
         List<String> lines = new ArrayList<>();
         String line = "";

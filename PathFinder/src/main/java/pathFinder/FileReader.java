@@ -24,6 +24,13 @@ public class FileReader {
         
     }
     
+    /**
+     * Tries to read the file with the given filename
+     * If file is in correct form, converts the file to map array
+     * 
+     * @param fileName name of the file
+     * @return map array
+     */
     public int[][] readFile(String fileName) {
         try (Scanner reader = new Scanner(Paths.get(fileName))) {
             int rows = 0;
@@ -46,13 +53,10 @@ public class FileReader {
                 } else {
                     this.map[i][x] = -1;
                 }
-  //              System.out.print(this.labyrinth[i][x]);
             }
-           // System.out.println("");
         }
         
         return this.map;
         
     }
-    
 }

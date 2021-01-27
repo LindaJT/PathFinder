@@ -31,3 +31,5 @@ https://ai.stackexchange.com/questions/8821/how-is-iterative-deepening-a-better-
 https://en.wikipedia.org/wiki/A***_search_algorithm#Complexity
 
 https://en.m.wikipedia.org/wiki/Iterative_deepening_A***
+
+https://medium.com/@nicholas.w.swift/easy-a-star-pathfinding-7e6689c7f7b2
