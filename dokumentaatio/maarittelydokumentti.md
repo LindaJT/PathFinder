@@ -4,6 +4,8 @@ Opinto-ohjelma: Tietojenkäsittelytieteen kandidaatti
 
 Projektissa käytettävä ohjelmointikieli: Java
 
+Koodissa käytettävä kieli (myös javadoc): englanti
+
 Dokumentointikieli: suomi
 
 ### Ongelma
