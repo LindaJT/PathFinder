@@ -55,16 +55,23 @@ public class PathService {
         }
         AStar astar = new AStar(this.map, xstart, ystart);
         List<Node> path = astar.findPathTo(xend, yend);
+        int[][] astarMap = new int[this.map.length][this.map[0].length];
+        for (int x = 0; x < this.map.length; x++) {
+            for (int y = 0; y < this.map[0].length; y++) {
+                astarMap[x][y] = this.map[x][y];
+            }
+        }
         if (path != null) {
             path.forEach((n) -> {
                 System.out.print("[" + n.getX() + ", " + n.getY() + "] ");
-                this.map[n.getY()][n.getX()] = 1;
+                astarMap[n.getY()][n.getX()] = 1;
             });
         } else {
             return 0;
         }
+        /*
         System.out.println();
-        for (int[] mazerow : map) {
+        for (int[] mazerow : astarMap) {
             for (int mazeentry : mazerow) {
                 switch (mazeentry) {
                     case 0:
@@ -78,11 +85,63 @@ public class PathService {
                 }
             }
             System.out.println();
-        }
+        }*/
         int distance = (int) path.get(path.size() - 1).getG();
         return distance;
     }
 
+        /**
+     * Calculating distance of the shortest path using IDA-star
+     * 
+     * @param xstart start point x coordinate
+     * @param ystart start point y coordinate
+     * @param xend goal point x coordinate
+     * @param yend goal point y coordinate
+     * @return distance of the shortest path
+     */
+    public int IDAStarDistance(int xstart, int ystart, int xend, int yend) {
+        if (xstart == xend && ystart == yend) {
+            return 0;
+        } else if (this.map[ystart][xstart] == -1 || this.map[yend][xend] == -1) {
+            return -1;
+        }
+        IDAStar idastar = new IDAStar(this.map, xstart, ystart);
+        List<Node> idaPath = idastar.findPathTo(xend, yend);
+        int[][] idastarMap = new int[this.map.length][this.map[0].length];
+        for (int x = 0; x < this.map.length; x++) {
+            for (int y = 0; y < this.map[0].length; y++) {
+                idastarMap[x][y] = this.map[x][y];
+            }
+        }
+        if (idaPath != null) {
+            idaPath.forEach((n) -> {
+                System.out.print("[" + n.getX() + ", " + n.getY() + "] ");
+                idastarMap[n.getY()][n.getX()] = 1;
+            });
+        } else {
+            return 0;
+        }
+        /*
+        System.out.println();
+        for (int[] mazerow : idastarMap) {
+            for (int mazeentry : mazerow) {
+                switch (mazeentry) {
+                    case 0:
+                        System.out.print("_");
+                        break;
+                    case -1:
+                        System.out.print("*");
+                        break;
+                    default:
+                        System.out.print("#");
+                }
+            }
+            System.out.println();
+        }*/
+        int distance = (int) idaPath.get(idaPath.size() - 1).getG();
+        return distance;
+    }
+    
     public int[][] getMap() {
         return map;
     }

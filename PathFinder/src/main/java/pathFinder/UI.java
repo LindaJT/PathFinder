@@ -55,27 +55,58 @@ public class UI extends Application {
         Label yendLabel = new Label("y end: ");
         TextField yendInput = new TextField();
         
+        HBox optionsPane = new HBox(10);
+        VBox astarPane = new VBox(10);
+        VBox idastarPane = new VBox(10);
         
-        Button distanceButton = new Button("Find shortest path");
-        Text distanceText = new Text("---");
+        Text distanceTitle = new Text("Find shortes path with ");
+        Button aStarButton = new Button("A*");
+        Text aStarDistance = new Text("----");
+        Text aStarTime = new Text("----");
         
-        distanceButton.setOnAction(e -> {
+        Button idaStarButton = new Button("IDA*");
+        Text idaStarDistance = new Text("----");
+        Text idaStarTime = new Text("----");
+        
+        aStarButton.setOnAction(e -> {
             int xstart = Integer.parseInt(xstartInput.getText());
             int ystart = Integer.parseInt(ystartInput.getText());
             int xend = Integer.parseInt(xendInput.getText());
             int yend = Integer.parseInt(yendInput.getText());
+            long aStartTime = System.currentTimeMillis();
             int distance = service.aStarDistance(xstart, ystart, xend, yend);
+            long aEndTime = System.currentTimeMillis();
             String text = String.valueOf(distance);
-            distanceText.setText(text);
+            String text2 = String.valueOf(aEndTime - aStartTime);
+            aStarDistance.setText(text);
+            aStarTime.setText(text2);
             service.drawPath();
         });
         
+        idaStarButton.setOnAction(e -> {
+            int xstart = Integer.parseInt(xstartInput.getText());
+            int ystart = Integer.parseInt(ystartInput.getText());
+            int xend = Integer.parseInt(xendInput.getText());
+            int yend = Integer.parseInt(yendInput.getText());
+            long idaStartTime = System.currentTimeMillis();
+            int distance = service.IDAStarDistance(xstart, ystart, xend, yend);
+            long idaEndTime = System.currentTimeMillis();
+            String text = String.valueOf(distance);
+            String text2 = String.valueOf(idaEndTime - idaStartTime);
+            idaStarDistance.setText(text);
+            idaStarTime.setText(text2);
+            service.drawPath();
+        });
+        
+        astarPane.getChildren().addAll(aStarButton, aStarDistance, aStarTime);
+        idastarPane.getChildren().addAll(idaStarButton, idaStarDistance, idaStarTime);
+        optionsPane.getChildren().addAll(astarPane, idastarPane);
         
         inputPane.getChildren().addAll(fileInput, fileButton);
         
         
         mainPane.getChildren().addAll(fileLabel, inputPane, fileText, startCoordinatesText, xstartLabel, xstartInput,
-                ystartLabel, ystartInput, endCoordinatesText, xendLabel, xendInput, yendLabel, yendInput, distanceButton, distanceText);       
+                ystartLabel, ystartInput, endCoordinatesText, xendLabel, xendInput, yendLabel, yendInput, distanceTitle, optionsPane);       
         
         Scene inputScene = new Scene(mainPane, 700, 700);    
         primaryStage.setScene(inputScene);    
