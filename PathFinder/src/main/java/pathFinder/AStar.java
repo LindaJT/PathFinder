@@ -6,8 +6,8 @@
 package pathFinder;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.PriorityQueue;
 
 /**
  * Finding shortest path with AStar
@@ -15,8 +15,8 @@ import java.util.List;
  */
 public class AStar {
     
-    private final List<Node> open;
-    private final List<Node> closed;
+    private final PriorityQueue<Node> open;
+    private final PriorityQueue<Node> closed;
     private final List<Node> path;
     private final int[][] map;
     private Node now;
@@ -26,8 +26,8 @@ public class AStar {
     
     public AStar(int[][] map, int xstart, int ystart) {
         
-        this.open = new ArrayList<>();
-        this.closed = new ArrayList<>();
+        this.open = new PriorityQueue<>();
+        this.closed = new PriorityQueue<>();
         this.path = new ArrayList<>();
         this.map = map;
         this.now = new Node(null, xstart, ystart, 0, 0);
@@ -47,21 +47,23 @@ public class AStar {
         this.yend = y;
         this.closed.add(this.now);
         addNeigborsToOpenList();
-        while (this.now.getX() != this.xend || this.now.getY() != this.yend) {
-            if (this.open.isEmpty()) { 
+        while (!this.open.isEmpty() /*this.now.getX() != this.xend || this.now.getY() != this.yend*/) {
+           /* if (this.open.isEmpty()) { 
                 return null;
+            }*/
+            this.now = this.open.poll(); 
+            this.closed.add(this.now);
+            if (this.now.getX() == this.xend && this.now.getY() == this.yend) {
+                this.path.add(0, this.now);
+                while (this.now.getX() != this.xstart || this.now.getY() != this.ystart) {
+                    this.now = this.now.getParent();
+                    this.path.add(0, this.now);
+                }
+                return this.path;
             }
-            this.now = this.open.get(0); 
-            this.open.remove(0); 
-            this.closed.add(this.now); 
             addNeigborsToOpenList();
         }
-        this.path.add(0, this.now);
-        while (this.now.getX() != this.xstart || this.now.getY() != this.ystart) {
-            this.now = this.now.getParent();
-            this.path.add(0, this.now);
-        }
-        return this.path;
+        return null;
     }
 
         /**
@@ -71,7 +73,7 @@ public class AStar {
          * @param node node to be found
          * @return true if node is found
          */
-    private static boolean findNeighborInList(List<Node> nodes, Node node) {
+    private static boolean findNeighborInList(PriorityQueue<Node> nodes, Node node) {
         return nodes.stream().anyMatch((n) -> (n.getX() == node.getX() && n.getY() == node.getY()));
     }
 
@@ -100,13 +102,15 @@ public class AStar {
                     && this.now.getY() + y >= 0 && this.now.getY() + y < this.map.length
                     && this.map[this.now.getY() + y][this.now.getX() + x] != -1 // check if walkable
                     && !findNeighborInList(this.open, node) && !findNeighborInList(this.closed, node)) { // check if not already done
-                        node.setG(node.getParent().getG() + 1.); 
+                      /*  node.setG(node.getParent().getG() + 1.); 
                         node.setG(node.getG() + this.map[this.now.getY() + y][this.now.getX() + x]);
-                        this.open.add(node);
+                        this.open.add(node);*/
+                      node.setG(node.getParent().getG() + 1);
+                      node.setG(node.getG() + this.map[this.now.getY() + y][this.now.getX() + x]);
+                      this.open.add(node);
                 }
             }
         }
-        Collections.sort(this.open);
     }
 }
 

@@ -18,9 +18,13 @@ import java.util.List;
 public class PathService {
     
     private int[][] map;
+    private int[][] astarMap;
+    private int[][] idastarMap;
     
     public PathService() {
         this.map = new int[0][0];
+        this.astarMap = new int[0][0];
+        this.idastarMap = new int[0][0];
     }
     
     /**
@@ -55,16 +59,16 @@ public class PathService {
         }
         AStar astar = new AStar(this.map, xstart, ystart);
         List<Node> path = astar.findPathTo(xend, yend);
-        int[][] astarMap = new int[this.map.length][this.map[0].length];
+        this.astarMap = new int[this.map.length][this.map[0].length];
         for (int x = 0; x < this.map.length; x++) {
             for (int y = 0; y < this.map[0].length; y++) {
-                astarMap[x][y] = this.map[x][y];
+                this.astarMap[x][y] = this.map[x][y];
             }
         }
         if (path != null) {
             path.forEach((n) -> {
                 System.out.print("[" + n.getX() + ", " + n.getY() + "] ");
-                astarMap[n.getY()][n.getX()] = 1;
+                this.astarMap[n.getY()][n.getX()] = 1;
             });
         } else {
             return 0;
@@ -107,16 +111,16 @@ public class PathService {
         }
         IDAStar idastar = new IDAStar(this.map, xstart, ystart);
         List<Node> idaPath = idastar.findPathTo(xend, yend);
-        int[][] idastarMap = new int[this.map.length][this.map[0].length];
+        this.idastarMap = new int[this.map.length][this.map[0].length];
         for (int x = 0; x < this.map.length; x++) {
             for (int y = 0; y < this.map[0].length; y++) {
-                idastarMap[x][y] = this.map[x][y];
+                this.idastarMap[x][y] = this.map[x][y];
             }
         }
         if (idaPath != null) {
             idaPath.forEach((n) -> {
                 System.out.print("[" + n.getX() + ", " + n.getY() + "] ");
-                idastarMap[n.getY()][n.getX()] = 1;
+                this.idastarMap[n.getY()][n.getX()] = 1;
             });
         } else {
             return 0;
@@ -150,26 +154,47 @@ public class PathService {
      * For visualization
      * Writes the map with the path on a file
      */
-    public void drawPath() {
+    public void drawPath(Boolean astar) {
         List<String> lines = new ArrayList<>();
         String line = "";
-        for (int[] maprow : map) {
-            for (int mapentry : maprow) {
-                String c = "";
-                switch (mapentry) {
-                    case 0:
-                        c = ".";
-                        break;
-                    case -1:
-                        c = "@";
-                        break;
-                    default:
-                        c = "#";
-                }
+        if (astar) {
+            for (int[] maprow : this.astarMap) {
+                for (int mapentry : maprow) {
+                    String c = "";
+                    switch (mapentry) {
+                        case 0:
+                            c = ".";
+                            break;
+                        case -1:
+                            c = "@";
+                            break;
+                        default:
+                            c = "#";
+                    }
                 line = line + c;
             }
             lines.add(line);
             line = "";
+            }
+        } else {
+            for (int[] maprow : this.idastarMap) {
+                for (int mapentry : maprow) {
+                    String c = "";
+                    switch (mapentry) {
+                        case 0:
+                            c = ".";
+                            break;
+                        case -1:
+                            c = "@";
+                            break;
+                        default:
+                            c = "#";
+                    }
+                line = line + c;
+            }
+            lines.add(line);
+            line = "";
+            }
         }
         try {
             FileWriter fileWriter = new FileWriter("path.txt");

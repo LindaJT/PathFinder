@@ -80,7 +80,7 @@ public class UI extends Application {
             String text2 = String.valueOf(aEndTime - aStartTime);
             aStarDistance.setText(text);
             aStarTime.setText(text2);
-            service.drawPath();
+            service.drawPath(true);
         });
         
         idaStarButton.setOnAction(e -> {
@@ -95,7 +95,7 @@ public class UI extends Application {
             String text2 = String.valueOf(idaEndTime - idaStartTime);
             idaStarDistance.setText(text);
             idaStarTime.setText(text2);
-            service.drawPath();
+            service.drawPath(false);
         });
         
         astarPane.getChildren().addAll(aStarButton, aStarDistance, aStarTime);

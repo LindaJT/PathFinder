@@ -20,10 +20,10 @@ public class FileReaderTest {
     
     @Test
     public void readFileReturnsCorrectArray() {
-        int[][] map = {{0, 0, 0, 0, -1, -1},
-                        {0, 0, -1 -1, 0, 0},
-                        {0, 0, 0, 0, 0, 0},
-                        {0, 0, 0, 0, 0, 0}};
+        int[][] map = {{0, 0, 0, 0, -1, -1, 0},
+                        {0, 0, -1 -1, -1, 0, 0},
+                        {0, 0, 0, -1, -1, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0}};
         int[][] returnedMap = this.reader.readFile("test.txt");
         assertEquals(map.length, returnedMap.length);
         assertEquals(map[0].length, returnedMap[0].length);
