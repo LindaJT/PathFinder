@@ -58,6 +58,7 @@ public class UI extends Application {
         HBox optionsPane = new HBox(10);
         VBox astarPane = new VBox(10);
         VBox idastarPane = new VBox(10);
+        VBox textPane = new VBox(10);
         
         Text distanceTitle = new Text("Find shortes path with ");
         Button aStarButton = new Button("A*");
@@ -67,6 +68,10 @@ public class UI extends Application {
         Button idaStarButton = new Button("IDA*");
         Text idaStarDistance = new Text("----");
         Text idaStarTime = new Text("----");
+        
+        Text empty = new Text("    ");
+        Text distanceDes = new Text("Distance:");
+        Text timeText = new Text("Time (in milliseconds):");
         
         aStarButton.setOnAction(e -> {
             int xstart = Integer.parseInt(xstartInput.getText());
@@ -100,7 +105,8 @@ public class UI extends Application {
         
         astarPane.getChildren().addAll(aStarButton, aStarDistance, aStarTime);
         idastarPane.getChildren().addAll(idaStarButton, idaStarDistance, idaStarTime);
-        optionsPane.getChildren().addAll(astarPane, idastarPane);
+        textPane.getChildren().addAll(empty, distanceDes, timeText);
+        optionsPane.getChildren().addAll(textPane, astarPane, idastarPane);
         
         inputPane.getChildren().addAll(fileInput, fileButton);
         

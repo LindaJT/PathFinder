@@ -61,7 +61,9 @@ public class IDAStar {
      * @return distance
      */
     private double distance(int dx, int dy) {
-        return Math.max((Math.abs(dx - this.xend)), Math.abs(dy - this.yend));
+        int dxnew = Math.abs(dx - xend);
+        int dynew = Math.abs(dy - yend);
+        return (dxnew+dynew) + (Math.sqrt(2) - 2) * Math.min(dxnew, dynew);
     }
 
     private double search(Node now, int gscore, double threshold) {
@@ -106,6 +108,15 @@ public class IDAStar {
                         node.setG(node.getParent().getG() + 1.); 
                         node.setG(node.getG() + this.map[this.now.getY() + y][this.now.getX() + x]);
                         neighbors.add(node);
+                        if (this.now.getX() != x && this.now.getY() != y) {
+                            node.setG(node.getParent().getG() + Math.sqrt(2));
+                            node.setG(node.getG() + this.map[this.now.getY() + y][this.now.getX() + x]);
+                            neighbors.add(node);
+                      } else {
+                            node.setG(node.getParent().getG() + 1);
+                            node.setG(node.getG() + this.map[this.now.getY() + y][this.now.getX() + x]);
+                            neighbors.add(node);
+                      }
                 }
             }
         }

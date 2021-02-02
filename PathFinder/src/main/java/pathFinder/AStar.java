@@ -62,6 +62,13 @@ public class AStar {
                 return this.path;
             }
             addNeigborsToOpenList();
+          /*  if (z > 5) {
+                for (int i = 0; i < this.open.size(); i++) {
+                Node n = this.open.poll();
+                System.out.println(n.getX() + "    " + n.getY() + "    " + n.getG() + "    " + n.getH());
+            }
+            return null;
+            }*/
         }
         return null;
     }
@@ -86,17 +93,19 @@ public class AStar {
      * @return distance
      */
     private double distance(int dx, int dy) {
-        return Math.max((Math.abs(this.now.getX() + dx - this.xend)), Math.abs(this.now.getY() + dy - this.yend));
+        int dxnew = Math.abs(dx - xend);
+        int dynew = Math.abs(dy - yend);
+        return (dxnew+dynew) + (Math.sqrt(2) - 2) * Math.min(dxnew, dynew);
     }
     
     /**
      * Adds neighbors for the current node
      */
-    private void addNeigborsToOpenList() {
+ /*   private void addNeigborsToOpenList() {
         Node node;
         for (int x = -1; x <= 1; x++) {
             for (int y = -1; y <= 1; y++) {
-                node = new Node(this.now, this.now.getX() + x, this.now.getY() + y, this.now.getG(), this.distance(x, y));
+                node = new Node(this.now, this.now.getX() + x, this.now.getY() + y, Double.MAX_VALUE, this.distance(this.now.getX() + x, this.now.getY() + y));
                 if ((x != 0 || y != 0) // not this.now
                     && this.now.getX() + x >= 0 && this.now.getX() + x < this.map[0].length // check boundaries
                     && this.now.getY() + y >= 0 && this.now.getY() + y < this.map.length
@@ -105,12 +114,61 @@ public class AStar {
                       /*  node.setG(node.getParent().getG() + 1.); 
                         node.setG(node.getG() + this.map[this.now.getY() + y][this.now.getX() + x]);
                         this.open.add(node);*/
-                      node.setG(node.getParent().getG() + 1);
-                      node.setG(node.getG() + this.map[this.now.getY() + y][this.now.getX() + x]);
-                      this.open.add(node);
+                   /*   if (isDiagonal(x,y)) {
+                            node.setG(node.getParent().getG() + Math.sqrt(2));
+                            node.setG(node.getG() + this.map[this.now.getY() + y][this.now.getX() + x]);
+                            this.open.add(node);
+                      } else {
+                            node.setG(node.getParent().getG() + 1);
+                            node.setG(node.getG() + this.map[this.now.getY() + y][this.now.getX() + x]);
+                            this.open.add(node);
+                      }
                 }
             }
         }
+    }*/
+    
+    private void addNeigborsToOpenList() {
+        Node node;
+        for (int x = -1; x <= 1; x++) {
+            for (int y = -1; y <= 1; y++) {
+                if ((x != 0 || y != 0) // not this.now
+                    && this.now.getX() + x >= 0 && this.now.getX() + x < this.map[0].length // check boundaries
+                    && this.now.getY() + y >= 0 && this.now.getY() + y < this.map.length
+                    && this.map[this.now.getY() + y][this.now.getX() + x] != -1 ) {
+                    if (findNode(this.closed, x, y) != null) {
+                        continue;
+                    }
+                    double cost = 0.;
+                    if (isDiagonal(x,y)) {
+                        cost = this.now.getG() + Math.sqrt(2) + this.map[this.now.getY() + y][this.now.getX() + x];
+                    } else {
+                        cost = this.now.getG() + 1. + this.map[this.now.getY() + y][this.now.getX() + x];
+                    }
+                    if (findNode(this.open, x, y) == null) {
+                        node = new Node(this.now, this.now.getX() + x, this.now.getY() + y, cost, this.distance(this.now.getX() + x, this.now.getY() + y));
+                        this.open.add(node);
+                    } else {
+                        node = findNode(this.open, x, y);
+                        if (node.getG() > cost) {
+                            node.setG(cost);
+                            node.setH(this.distance(this.now.getX() + x, this.now.getY() + y));
+                            node.setParent(this.now);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private boolean isDiagonal(int x, int y) {
+        return this.now.getX() != x && this.now.getY() != y;
+    }
+    
+    private Node findNode(PriorityQueue<Node> nodes, int x, int y) {
+        int nowx = this.now.getX() + x;
+        int nowy = this.now.getY() + y;
+        return nodes.stream().filter((n) -> (n.getX() == nowx && n.getY() == nowy)).findFirst().orElse(null);
     }
 }
 

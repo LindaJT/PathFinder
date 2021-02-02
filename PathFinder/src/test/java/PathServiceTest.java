@@ -33,7 +33,7 @@ public class PathServiceTest {
     
     @Test 
     public void readFileCanNotReadNonExcistingMap() {
-        boolean value = this.service.readFile("test2.txt");
+        boolean value = this.service.readFile("tst.txt");
         assertFalse(value);
     }
     

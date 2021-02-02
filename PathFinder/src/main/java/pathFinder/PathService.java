@@ -67,7 +67,7 @@ public class PathService {
         }
         if (path != null) {
             path.forEach((n) -> {
-                System.out.print("[" + n.getX() + ", " + n.getY() + "] ");
+                System.out.print("[" + n.getX() + ", " + n.getY() +  " " + n.getG() + "] ");
                 this.astarMap[n.getY()][n.getX()] = 1;
             });
         } else {
