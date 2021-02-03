@@ -49,18 +49,38 @@ public class PathServiceTest {
         assertEquals(0, value);
     }
     
-  //  @Test
-    //public void aStarDistanceReturnsCorrectPathLength() {
-      //  this.service.getMap() = this.map;
-  //      int value = this.service.aStarDistance(0, 0, 1, 2);
-  //      assertEquals(2, value);
-    //}
+    @Test
+    public void aStarDistanceReturnsCorrectPathLength() {
+        this.service.setMap(this.map);
+        int value = this.service.aStarDistance(0, 0, 1, 2);
+        assertEquals(2, value);
+    }
     
- /*   @Test
+    @Test
     public void canNotStartFromNonPassableTerrain() {
-        this.service.map = this.map;
+        this.service.setMap(this.map);
         int value = this.service.aStarDistance(4, 0, 1, 2);
         assertEquals(-1, value);
-    }*/
+    }
+    
+        @Test
+    public void idaStarDistanceReturnsZeroIfStartAndEndAreSame() {
+        int value = this.service.idaStarDistance(1, 1, 1, 1);
+        assertEquals(0, value);
+    }
+    
+    @Test
+    public void idaStarDistanceReturnsCorrectPathLength() {
+        this.service.setMap(this.map);
+        int value = this.service.idaStarDistance(0, 0, 1, 2);
+        assertEquals(2, value);
+    }
+    
+    @Test
+    public void idaStarcanNotStartFromNonPassableTerrain() {
+        this.service.setMap(this.map);
+        int value = this.service.idaStarDistance(4, 0, 1, 2);
+        assertEquals(-1, value);
+    }
 
 }

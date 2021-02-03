@@ -67,7 +67,7 @@ public class PathService {
         }
         if (path != null) {
             path.forEach((n) -> {
-                System.out.print("[" + n.getX() + ", " + n.getY() +  " " + n.getG() + "] ");
+                System.out.print("[" + n.getX() + ", " + n.getY() + "] ");
                 this.astarMap[n.getY()][n.getX()] = 1;
             });
         } else {
@@ -94,6 +94,12 @@ public class PathService {
         return distance;
     }
 
+    public void setMap(int[][] map) {
+        this.map = map;
+    }
+    
+    
+
         /**
      * Calculating distance of the shortest path using IDA-star
      * 
@@ -103,7 +109,7 @@ public class PathService {
      * @param yend goal point y coordinate
      * @return distance of the shortest path
      */
-    public int IDAStarDistance(int xstart, int ystart, int xend, int yend) {
+    public int idaStarDistance(int xstart, int ystart, int xend, int yend) {
         if (xstart == xend && ystart == yend) {
             return 0;
         } else if (this.map[ystart][xstart] == -1 || this.map[yend][xend] == -1) {

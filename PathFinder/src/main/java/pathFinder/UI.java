@@ -94,7 +94,7 @@ public class UI extends Application {
             int xend = Integer.parseInt(xendInput.getText());
             int yend = Integer.parseInt(yendInput.getText());
             long idaStartTime = System.currentTimeMillis();
-            int distance = service.IDAStarDistance(xstart, ystart, xend, yend);
+            int distance = service.idaStarDistance(xstart, ystart, xend, yend);
             long idaEndTime = System.currentTimeMillis();
             String text = String.valueOf(distance);
             String text2 = String.valueOf(idaEndTime - idaStartTime);

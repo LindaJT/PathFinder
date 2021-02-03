@@ -34,10 +34,10 @@ public class IDAStar {
     public List<Node> findPathTo(int x, int y) {
         this.xend = x;
         this.yend = y;
-        double threshold = this.distance(0,0);
+        double threshold = this.distance(0, 0);
         this.stack.add(this.now);
         while (true) {
-            double temp = search(this.now, 0, threshold);
+            double temp = search(0, threshold);
             if (temp == -1.0) {
                 this.path.add(0, this.now);
                 while (this.now.getX() != this.xstart || this.now.getY() != this.ystart) {
@@ -61,12 +61,10 @@ public class IDAStar {
      * @return distance
      */
     private double distance(int dx, int dy) {
-        int dxnew = Math.abs(dx - xend);
-        int dynew = Math.abs(dy - yend);
-        return (dxnew+dynew) + (Math.sqrt(2) - 2) * Math.min(dxnew, dynew);
+        return Math.max((Math.abs(dx - this.xend)), Math.abs(dy - this.yend));
     }
 
-    private double search(Node now, int gscore, double threshold) {
+    private double search(int gscore, double threshold) {
         this.now = this.stack.peek();
         double f = gscore + this.distance(now.getX(), now.getY());
         if (f > threshold) {
@@ -78,7 +76,7 @@ public class IDAStar {
         double min = Double.MAX_VALUE;
         for (Node node : this.neighborNodes()) {
             this.stack.push(node);
-            double temp = this.search(node, gscore+1, threshold);
+            double temp = this.search(gscore + 1, threshold);
             if (temp == -1.0) {
                 return -1.0;
             }
@@ -99,16 +97,14 @@ public class IDAStar {
         Node node;
         for (int x = -1; x <= 1; x++) {
             for (int y = -1; y <= 1; y++) {
-                node = new Node(this.now, this.now.getX() + x, this.now.getY() + y, this.now.getG(), this.distance(this.now.getX() + x, this.now.getY() + y));
+                node = new Node(this.now, this.now.getX() + x, this.now.getY() + y, 
+                        this.now.getG(), this.distance(this.now.getX() + x, this.now.getY() + y));
                 if ((x != 0 || y != 0) // not this.now
                     && this.now.getX() + x >= 0 && this.now.getX() + x < this.map[0].length // check boundaries
                     && this.now.getY() + y >= 0 && this.now.getY() + y < this.map.length
                     && this.map[this.now.getY() + y][this.now.getX() + x] != -1 // check if walkable
                     && !findNeighborInList(neighbors, node)) { // check if not already done
-                        node.setG(node.getParent().getG() + 1.); 
-                        node.setG(node.getG() + this.map[this.now.getY() + y][this.now.getX() + x]);
-                        neighbors.add(node);
-                        if (this.now.getX() != x && this.now.getY() != y) {
+                        if (this.now.getX() != this.now.getX() + x && this.now.getY() != this.now.getY() + y) {
                             node.setG(node.getParent().getG() + Math.sqrt(2));
                             node.setG(node.getG() + this.map[this.now.getY() + y][this.now.getX() + x]);
                             neighbors.add(node);
