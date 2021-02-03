@@ -18,9 +18,9 @@ Ohjelma saa syötteenä txt-muotoisia kaupunkikarttoja, missä . tarkoittaa kulj
 
 ### Aika- ja tilavaatimukset 
 
-Sekä A-starilla ja IDA-starilla on eksponentaaliaaninen aikavaativuus. A-starin tilavaativuus on O(b^d), missä b on maksimi haarautumistekijä ja m hakupuun syvyys. IDA-starin tilavaativuus taas on O(bm). 
+Sekä A-starilla ja IDA-starilla on solmujen suhteen neliöllinen pahimman tapauksen aikavaativuus. A-starin tilavaativuus on O(b^d), missä b on maksimi haarautumistekijä ja m hakupuun syvyys. IDA-starin tilavaativuus taas on O(bm). 
 
-Kartan lukemisen aikavaativuus on O(n²), missä n on pikseleiden määrä kartassa.
+Kartan lukemisen aikavaativuus on O(n²), missä n on neliön muotoisen kartan sivun pituus.
 
 ### Lähteet:
 
