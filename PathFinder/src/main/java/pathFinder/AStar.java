@@ -8,6 +8,7 @@ package pathFinder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
+import pathFinder.util.MinHeap;
 
 /**
  * Finding shortest path with AStar
@@ -16,6 +17,7 @@ import java.util.PriorityQueue;
 public class AStar {
     
     private final PriorityQueue<Node> open;
+    private final MinHeap heap;
     private final PriorityQueue<Node> closed;
     private final List<Node> path;
     private final int[][] map;
@@ -23,6 +25,8 @@ public class AStar {
     private final int xstart;
     private final int ystart;
     private int xend, yend;
+    private Node[][] came_from;
+    private double[][] cost_so_far;
     
     public AStar(int[][] map, int xstart, int ystart) {
         
@@ -33,6 +37,11 @@ public class AStar {
         this.now = new Node(null, xstart, ystart, 0, 0);
         this.xstart = xstart;
         this.ystart = ystart;
+        this.heap = new MinHeap(this.map.length * this.map.length, this.now);
+        this.came_from = new Node[this.map.length][this.map[0].length];
+        this.cost_so_far = new double[this.map.length][this.map[0].length];
+        this.came_from[0][0] = null;
+        this.cost_so_far[0][0] = 0;
     }
     
     /**
@@ -45,14 +54,14 @@ public class AStar {
         public List<Node> findPathTo(int x, int y) {
         this.xend = x;
         this.yend = y;
-        this.closed.add(this.now);
+       // this.closed.add(this.now);
         addNeigborsToOpenList();
-        while (!this.open.isEmpty() /*this.now.getX() != this.xend || this.now.getY() != this.yend*/) {
+        while (this.heap.getSize() > 0    /*!this.open.isEmpty() this.now.getX() != this.xend || this.now.getY() != this.yend*/) {
            /* if (this.open.isEmpty()) { 
                 return null;
             }*/
-            this.now = this.open.poll(); 
-            this.closed.add(this.now);
+            this.now = this.heap.remove(); 
+          //  this.closed.add(this.now);
             if (this.now.getX() == this.xend && this.now.getY() == this.yend) {
                 this.path.add(0, this.now);
                 while (this.now.getX() != this.xstart || this.now.getY() != this.ystart) {
@@ -62,16 +71,13 @@ public class AStar {
                 return this.path;
             }
             addNeigborsToOpenList();
-          /*  if (z > 5) {
-                for (int i = 0; i < this.open.size(); i++) {
-                Node n = this.open.poll();
-                System.out.println(n.getX() + "    " + n.getY() + "    " + n.getG() + "    " + n.getH());
-            }
-            return null;
-            }*/
         }
         return null;
     }
+        
+        public Node[][] getPath() {
+            return this.came_from;
+        }
 
         /**
          * To check if node is on a list
@@ -96,49 +102,38 @@ public class AStar {
         return Math.max((Math.abs(dx - this.xend)), Math.abs(dy - this.yend));
     }
     
-    private void addNeigborsToOpenList() {
-        Node node;
-        for (int x = -1; x <= 1; x++) {
-            for (int y = -1; y <= 1; y++) {
-                if ((x != 0 || y != 0) // not this.now
-                    && this.now.getX() + x >= 0 && this.now.getX() + x < this.map[0].length // check boundaries
-                    && this.now.getY() + y >= 0 && this.now.getY() + y < this.map.length
-                    && this.map[this.now.getY() + y][this.now.getX() + x] != -1) {
-                    if (findNode(this.closed, x, y) != null) {
-                        continue;
-                    }
-                    double cost = 0.;
-                    if (isDiagonal(x, y)) {
-                        cost = this.now.getG() + Math.sqrt(2) + this.map[this.now.getY() + y][this.now.getX() + x];
-                    } else {
-                        cost = this.now.getG() + 1. + this.map[this.now.getY() + y][this.now.getX() + x];
-                    }
-                    if (findNode(this.open, x, y) == null) {
-                        node = new Node(this.now, this.now.getX() + x, this.now.getY() + y, 
-                                cost, this.distance(this.now.getX() + x, this.now.getY() + y));
-                        this.open.add(node);
-                    } else {
-                        node = findNode(this.open, x, y);
-                        if (node.getG() > cost) {
-                            node.setG(cost);
-                            node.setH(this.distance(this.now.getX() + x, this.now.getY() + y));
-                            node.setParent(this.now);
-                            this.open.add(node);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     private boolean isDiagonal(int x, int y) {
         return this.now.getX() != this.now.getX() + x && this.now.getY() != this.now.getY() + y;
     }
     
-    private Node findNode(PriorityQueue<Node> nodes, int x, int y) {
-        int nowx = this.now.getX() + x;
-        int nowy = this.now.getY() + y;
-        return nodes.stream().filter((n) -> (n.getX() == nowx && n.getY() == nowy)).findFirst().orElse(null);
+    private void addNeigborsToOpenList() {
+        Node node;
+        for (int x = -1; x <= 1; x++) {
+            for (int y = -1; y <= 1; y++) {
+                int newX = this.now.getX() + x;
+                int newY = this.now.getY() + y;
+                if ((x != 0 || y != 0) // not this.now
+                    && this.now.getX() + x >= 0 && this.now.getX() + x < this.map[0].length // check boundaries
+                    && this.now.getY() + y >= 0 && this.now.getY() + y < this.map.length
+                    && this.map[this.now.getY() + y][this.now.getX() + x] != -1) {
+                    double cost;
+                    if (isDiagonal(x, y)) {
+                        cost = this.cost_so_far[this.now.getY()][this.now.getX()] + Math.sqrt(2);
+                    } else {
+                        cost = this.cost_so_far[this.now.getY()][this.now.getX()] + 1;
+                    }
+                    if (cost_so_far[newY][newX] == 0. || cost < cost_so_far[newY][newX]) {
+                        cost_so_far[newY][newX] = cost;
+                        double dist = distance(newX, newY);
+                        node = new Node(this.now, newX, newY, cost, dist);
+                        this.heap.insert(node);
+                        this.came_from[newY][newX] = this.now;
+                    }
+
+                    
+                }
+            }
+        }
     }
 }
 
