@@ -16,32 +16,28 @@ import pathFinder.util.MinHeap;
  */
 public class AStar {
     
-    private final PriorityQueue<Node> open;
     private final MinHeap heap;
-    private final PriorityQueue<Node> closed;
     private final List<Node> path;
     private final int[][] map;
     private Node now;
     private final int xstart;
     private final int ystart;
     private int xend, yend;
-    private Node[][] came_from;
-    private double[][] cost_so_far;
+    private Node[][] cameFrom;
+    private double[][] costSoFar;
     
     public AStar(int[][] map, int xstart, int ystart) {
         
-        this.open = new PriorityQueue<>();
-        this.closed = new PriorityQueue<>();
         this.path = new ArrayList<>();
         this.map = map;
         this.now = new Node(null, xstart, ystart, 0, 0);
         this.xstart = xstart;
         this.ystart = ystart;
         this.heap = new MinHeap(this.map.length * this.map.length, this.now);
-        this.came_from = new Node[this.map.length][this.map[0].length];
-        this.cost_so_far = new double[this.map.length][this.map[0].length];
-        this.came_from[0][0] = null;
-        this.cost_so_far[0][0] = 0;
+        this.cameFrom = new Node[this.map.length][this.map[0].length];
+        this.costSoFar = new double[this.map.length][this.map[0].length];
+        this.cameFrom[0][0] = null;
+        this.costSoFar[0][0] = 0;
     }
     
     /**
@@ -76,7 +72,7 @@ public class AStar {
     }
         
         public Node[][] getPath() {
-            return this.came_from;
+            return this.cameFrom;
         }
 
         /**
@@ -91,9 +87,7 @@ public class AStar {
     }
 
     /**
-     * Calculates distance to the goal
-     * Allows diagonal movement, but no extra cost on diagonal moves
-     * 
+     * Calculates diagonal distance (uniform cost) to the goal
      * @param dx movement to x
      * @param dy movement to y
      * @return distance
@@ -102,6 +96,12 @@ public class AStar {
         return Math.max((Math.abs(dx - this.xend)), Math.abs(dy - this.yend));
     }
     
+    /**
+     * Function to check if two nodes are diagonal
+     * @param x change in x
+     * @param y change in y
+     * @return True if diagonal
+     */
     private boolean isDiagonal(int x, int y) {
         return this.now.getX() != this.now.getX() + x && this.now.getY() != this.now.getY() + y;
     }
@@ -118,16 +118,16 @@ public class AStar {
                     && this.map[this.now.getY() + y][this.now.getX() + x] != -1) {
                     double cost;
                     if (isDiagonal(x, y)) {
-                        cost = this.cost_so_far[this.now.getY()][this.now.getX()] + Math.sqrt(2);
+                        cost = this.costSoFar[this.now.getY()][this.now.getX()] + Math.sqrt(2);
                     } else {
-                        cost = this.cost_so_far[this.now.getY()][this.now.getX()] + 1;
+                        cost = this.costSoFar[this.now.getY()][this.now.getX()] + 1;
                     }
-                    if (cost_so_far[newY][newX] == 0. || cost < cost_so_far[newY][newX]) {
-                        cost_so_far[newY][newX] = cost;
+                    if (costSoFar[newY][newX] == 0. || cost < costSoFar[newY][newX]) {
+                        costSoFar[newY][newX] = cost;
                         double dist = distance(newX, newY);
                         node = new Node(this.now, newX, newY, cost, dist);
                         this.heap.insert(node);
-                        this.came_from[newY][newX] = this.now;
+                        this.cameFrom[newY][newX] = this.now;
                     }
 
                     

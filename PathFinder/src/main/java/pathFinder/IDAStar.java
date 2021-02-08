@@ -8,6 +8,7 @@ package pathFinder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import pathFinder.util.NeighborsList;
 
 /**
  *
@@ -74,8 +75,9 @@ public class IDAStar {
             return -1.0;
         }
         double min = Double.MAX_VALUE;
-        for (Node node : this.neighborNodes()) {
-            this.stack.push(node);
+        NeighborsList neighbors = this.neighborNodes();
+        for (int i = 0; i < neighbors.getSize(); i++) {
+            this.stack.push(neighbors.getNode(i));
             double temp = this.search(gscore + 1, threshold);
             if (temp == -1.0) {
                 return -1.0;
@@ -92,8 +94,8 @@ public class IDAStar {
         return nodes.stream().anyMatch((n) -> (n.getX() == node.getX() && n.getY() == node.getY()));
     }
     
-    private List<Node> neighborNodes() {
-        List<Node> neighbors = new ArrayList<>();
+    private NeighborsList neighborNodes() {
+        NeighborsList neighbors = new NeighborsList();
         Node node;
         for (int x = -1; x <= 1; x++) {
             for (int y = -1; y <= 1; y++) {
@@ -103,15 +105,15 @@ public class IDAStar {
                     && this.now.getX() + x >= 0 && this.now.getX() + x < this.map[0].length // check boundaries
                     && this.now.getY() + y >= 0 && this.now.getY() + y < this.map.length
                     && this.map[this.now.getY() + y][this.now.getX() + x] != -1 // check if walkable
-                    && !findNeighborInList(neighbors, node)) { // check if not already done
+                   /* && !findNeighborInList(neighbors, node)*/) { // check if not already done
                         if (this.now.getX() != this.now.getX() + x && this.now.getY() != this.now.getY() + y) {
                             node.setG(node.getParent().getG() + Math.sqrt(2));
                             node.setG(node.getG() + this.map[this.now.getY() + y][this.now.getX() + x]);
-                            neighbors.add(node);
+                            neighbors.insert(node);
                       } else {
                             node.setG(node.getParent().getG() + 1);
                             node.setG(node.getG() + this.map[this.now.getY() + y][this.now.getX() + x]);
-                            neighbors.add(node);
+                            neighbors.insert(node);
                       }
                 }
             }
