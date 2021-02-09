@@ -88,6 +88,8 @@ public class AStar {
 
     /**
      * Calculates diagonal distance (uniform cost) to the goal
+     * 
+     * 
      * @param dx movement to x
      * @param dy movement to y
      * @return distance

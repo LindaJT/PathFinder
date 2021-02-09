@@ -14,14 +14,6 @@ public class Node implements Comparable<Node> {
         private Node parent;
         private int x, y;
         private double g;
-
-    public void setParent(Node parent) {
-        this.parent = parent;
-    }
-
-    public void setH(double h) {
-        this.h = h;
-    }
         private double h;
         
         public Node(Node parent, int xpos, int ypos, double g, double h) {
@@ -36,7 +28,13 @@ public class Node implements Comparable<Node> {
         return parent;
     }
 
+    public void setParent(Node parent) {
+        this.parent = parent;
+    }
 
+    public void setH(double h) {
+        this.h = h;
+    }
 
     public double getG() {
         return g;

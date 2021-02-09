@@ -51,11 +51,11 @@ public class PathService {
      * @param yend goal point y coordinate
      * @return distance of the shortest path
      */
-    public int aStarDistance(int xstart, int ystart, int xend, int yend) {
+    public Double aStarDistance(int xstart, int ystart, int xend, int yend) {
         if (xstart == xend && ystart == yend) {
-            return 0;
+            return 0.;
         } else if (this.map[ystart][xstart] == -1 || this.map[yend][xend] == -1) {
-            return -1;
+            return -1.;
         }
         AStar astar = new AStar(this.map, xstart, ystart);
         List<Node> path = astar.findPathTo(xend, yend);
@@ -71,7 +71,7 @@ public class PathService {
                 this.astarMap[n.getY()][n.getX()] = 1;
             });
         } else {
-            return 0;
+            return 0.;
         }
         /*
         System.out.println();
@@ -90,7 +90,7 @@ public class PathService {
             }
             System.out.println();
         }*/
-        int distance = (int) path.get(path.size() - 1).getG();
+        double distance = (double) path.get(path.size() - 1).getG();
         return distance;
     }
 
@@ -109,11 +109,11 @@ public class PathService {
      * @param yend goal point y coordinate
      * @return distance of the shortest path
      */
-    public int idaStarDistance(int xstart, int ystart, int xend, int yend) {
+    public double idaStarDistance(int xstart, int ystart, int xend, int yend) {
         if (xstart == xend && ystart == yend) {
-            return 0;
+            return 0.;
         } else if (this.map[ystart][xstart] == -1 || this.map[yend][xend] == -1) {
-            return -1;
+            return -1.;
         }
         IDAStar idastar = new IDAStar(this.map, xstart, ystart);
         List<Node> idaPath = idastar.findPathTo(xend, yend);
@@ -129,7 +129,7 @@ public class PathService {
                 this.idastarMap[n.getY()][n.getX()] = 1;
             });
         } else {
-            return 0;
+            return 0.;
         }
         /*
         System.out.println();
@@ -148,7 +148,7 @@ public class PathService {
             }
             System.out.println();
         }*/
-        int distance = (int) idaPath.get(idaPath.size() - 1).getG();
+        double distance = (double) idaPath.get(idaPath.size() - 1).getG();
         return distance;
     }
     

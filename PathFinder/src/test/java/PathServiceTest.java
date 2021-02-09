@@ -45,41 +45,47 @@ public class PathServiceTest {
     
     @Test
     public void aStarDistanceReturnsZeroIfStartAndEndAreSame() {
-        int value = this.service.aStarDistance(1, 1, 1, 1);
+        double dist = this.service.aStarDistance(1, 1, 1, 1);
+        int value = (int) dist;
         assertEquals(0, value);
     }
     
     @Test
     public void aStarDistanceReturnsCorrectPathLength() {
         this.service.setMap(this.map);
-        int value = this.service.aStarDistance(0, 0, 1, 2);
+        double dist = this.service.aStarDistance(0, 0, 1, 2);
+        int value = (int) dist;
         assertEquals(2, value);
     }
     
     @Test
     public void canNotStartFromNonPassableTerrain() {
         this.service.setMap(this.map);
-        int value = this.service.aStarDistance(4, 0, 1, 2);
+        double dist = this.service.aStarDistance(4, 0, 1, 2);
+        int value = (int) dist;
         assertEquals(-1, value);
     }
     
         @Test
     public void idaStarDistanceReturnsZeroIfStartAndEndAreSame() {
-        int value = this.service.idaStarDistance(1, 1, 1, 1);
+        double dist = this.service.idaStarDistance(1, 1, 1, 1);
+        int value = (int) dist;
         assertEquals(0, value);
     }
     
     @Test
     public void idaStarDistanceReturnsCorrectPathLength() {
         this.service.setMap(this.map);
-        int value = this.service.idaStarDistance(0, 0, 1, 2);
+        double dist = this.service.idaStarDistance(0, 0, 1, 2);
+        int value = (int) dist;
         assertEquals(2, value);
     }
     
     @Test
     public void idaStarcanNotStartFromNonPassableTerrain() {
         this.service.setMap(this.map);
-        int value = this.service.idaStarDistance(4, 0, 1, 2);
+        double dist = this.service.idaStarDistance(4, 0, 1, 2);
+        int value = (int) dist;
         assertEquals(-1, value);
     }
 
