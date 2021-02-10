@@ -8,6 +8,7 @@ package pathFinder;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -131,7 +132,16 @@ public class PathService {
         } else {
             return 0.;
         }
-        /*
+  /*      System.out.println("");
+        DecimalFormat df = new DecimalFormat("#.##");
+        double[][] costs = idastar.getCostSoFar();
+        for (int x = 0; x < costs.length; x++) {
+            for (int y = 0; y < costs[0].length; y++) {
+                System.out.print(df.format(costs[x][y]) + " ");
+            }
+            System.out.println("");
+        }
+        
         System.out.println();
         for (int[] mazerow : idastarMap) {
             for (int mazeentry : mazerow) {
