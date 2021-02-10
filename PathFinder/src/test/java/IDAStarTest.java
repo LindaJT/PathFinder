@@ -41,7 +41,7 @@ public class IDAStarTest {
     @Test
     public void pathIsCorrectLength() {
         List<Node> path = ida.findPathTo(9, 1);
-        assertEquals(10, path.size());
+        assertEquals(9, path.size());
     }
     
     public void sameStartAndEndReturnsEmptyList() {
