@@ -20,32 +20,34 @@ import pathFinder.Node;
  */
 public class IDAStarTest {
     
-    public int[][] map = {{0,0,0,0,0,0,0,0,0,0},
-                          {0,0,0,0,-1,-1,-1,-1,0,0},
-                          {0,0,0,0,0,0,0,-1,0,0},
-                          {0,0,0,0,0,0,0,-1,0,0},
-                          {0,0,0,0,0,0,0,-1,0,0},
-                          {0,0,0,0,0,0,0,0,0,0}};
+    public int[][] map = {{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}, 
+                          {-1,0,0,0,0,0,0,0,0,0,0,-1},
+                          {-1,0,0,0,0,-1,-1,-1,-1,0,0,-1},
+                          {-1,0,0,0,0,0,0,0,-1,0,0,-1},
+                          {-1,0,0,0,0,0,0,0,-1,0,0,-1},
+                          {-1,0,0,0,0,0,0,0,-1,0,0,-1},
+                          {-1,0,0,0,0,0,0,0,0,0,0,-1},
+                          {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}};
     public IDAStar ida;
     
     public IDAStarTest() {
-        this.ida = new IDAStar(this.map, 1, 3);
+        this.ida = new IDAStar(this.map, 2, 4);
     }
    
     @Test
     public void findPathToReturnsAList() {
-        List<Node> path = ida.findPathTo(9, 1);
+        List<Node> path = ida.findPathTo(10, 2);
         assertFalse(path.isEmpty());
     }
     
     @Test
     public void pathIsCorrectLength() {
-        List<Node> path = ida.findPathTo(9, 1);
+        List<Node> path = ida.findPathTo(10, 2);
         assertEquals(9, path.size());
     }
     
     public void sameStartAndEndReturnsEmptyList() {
-        List<Node> path = ida.findPathTo(0, 0);
+        List<Node> path = ida.findPathTo(1, 1);
         assertTrue(path.isEmpty());
     }
     

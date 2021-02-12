@@ -75,6 +75,12 @@ public class AStar {
             return this.cameFrom;
         }
 
+    public double[][] getCostSoFar() {
+        return costSoFar;
+    }
+        
+        
+
         /**
          * To check if node is on a list
          * 
@@ -108,6 +114,10 @@ public class AStar {
         return this.now.getX() != this.now.getX() + x && this.now.getY() != this.now.getY() + y;
     }
     
+    
+    /**
+     * Adds current node's neighbors to the heap
+     */
     private void addNeigborsToOpenList() {
         Node node;
         for (int x = -1; x <= 1; x++) {
@@ -115,8 +125,6 @@ public class AStar {
                 int newX = this.now.getX() + x;
                 int newY = this.now.getY() + y;
                 if ((x != 0 || y != 0) // not this.now
-                    && this.now.getX() + x >= 0 && this.now.getX() + x < this.map[0].length // check boundaries
-                    && this.now.getY() + y >= 0 && this.now.getY() + y < this.map.length
                     && this.map[this.now.getY() + y][this.now.getX() + x] != -1) {
                     double cost;
                     if (isDiagonal(x, y)) {
@@ -131,8 +139,6 @@ public class AStar {
                         this.heap.insert(node);
                         this.cameFrom[newY][newX] = this.now;
                     }
-
-                    
                 }
             }
         }

@@ -8,6 +8,7 @@ package pathFinder;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class PathService {
     public boolean readFile(String fileName) {
         FileReader reader = new FileReader();
         this.map = reader.readFile(fileName);
-        if (this.map.length == 0) {
+        if (this.map.length < 3) {
             return false;
         }
         return true;
@@ -73,19 +74,31 @@ public class PathService {
         } else {
             return 0.;
         }
-        /*
-        System.out.println();
+        
+        double[][] costs = astar.getCostSoFar();
+        for (int x = 0; x < this.map.length; x++) {
+            for (int y = 0; y < this.map[0].length; y++) {
+                if (costs[x][y] > 1 && this.astarMap[x][y] != 1) {
+                    this.astarMap[x][y] = (int) costs[x][y];
+                }
+            }
+        }
+        
+     /*   System.out.println();
         for (int[] mazerow : astarMap) {
             for (int mazeentry : mazerow) {
                 switch (mazeentry) {
                     case 0:
-                        System.out.print("_");
+                        System.out.print(".");
                         break;
                     case -1:
-                        System.out.print("*");
+                        System.out.print("@");
+                        break;
+                    case 1:
+                        System.out.println("#");
                         break;
                     default:
-                        System.out.print("#");
+                        System.out.println("*");
                 }
             }
             System.out.println();
@@ -168,6 +181,7 @@ public class PathService {
     /**
      * For visualization
      * Writes the map with the path on a file
+     * @param astar True, if using aStar map, false for idaStar map
      */
     public void drawPath(Boolean astar) {
         List<String> lines = new ArrayList<>();
@@ -183,8 +197,11 @@ public class PathService {
                         case -1:
                             c = "@";
                             break;
-                        default:
+                        case 1:
                             c = "#";
+                            break;
+                        default:
+                            c = "*";
                     }
                 line = line + c;
             }

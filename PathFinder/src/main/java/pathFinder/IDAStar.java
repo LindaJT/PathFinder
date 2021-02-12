@@ -7,7 +7,6 @@ package pathFinder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 import pathFinder.util.NeighborsList;
 
 /**
@@ -21,9 +20,8 @@ public class IDAStar {
     private final int xstart;
     private final int ystart;
     private int xend, yend;
-    private Stack<Node> stack;
-    private double[][] costSoFar;
-    private boolean[][] inStack;
+    private final double[][] costSoFar;
+    private final boolean[][] inStack;
     
     public IDAStar(int[][] map, int xstart, int ystart) {
         this.map = map;
@@ -31,15 +29,21 @@ public class IDAStar {
         this.ystart = ystart;
         this.now = new Node(null, xstart, ystart, 0, 0);
         this.path = new ArrayList<>();
-        this.stack = new Stack<>();
         this.costSoFar = new double[this.map.length][this.map[0].length];
         this.costSoFar[0][0] = 0.;
         this.inStack = new boolean[this.map.length][this.map[0].length];
     }
     
-    public List<Node> findPathTo(int x, int y) {
-        this.xend = x;
-        this.yend = y;
+        /**
+     * Main method finding path to the coordinates given as parameters. 
+     * 
+     * @param goalX goal x coordinate
+     * @param goalY goal y coordinate
+     * @return List of nodes on the found path
+     */
+    public List<Node> findPathTo(int goalX, int goalY) {
+        this.xend = goalX;
+        this.yend = goalY;
         double threshold = this.distance(xstart, ystart);
         Node startNode = this.now;
         this.inStack[startNode.getY()][startNode.getX()] = true;
@@ -57,13 +61,6 @@ public class IDAStar {
             threshold = temp;
         }
     }
-
-    public double[][] getCostSoFar() {
-        return costSoFar;
-    }
-    
-    
-    
     
     
         /**
@@ -78,6 +75,14 @@ public class IDAStar {
         return Math.max((Math.abs(dx - this.xend)), Math.abs(dy - this.yend));
     }
 
+    /**
+     * Recursive function to go throw different paths
+     * Returns -1.0, if goal node is found
+     * @param currentNode
+     * @param gscore distance travelled
+     * @param threshold 
+     * @return
+     */
     private double search(Node currentNode, double gscore, double threshold) {
         double f = gscore + this.distance(currentNode.getX(), currentNode.getY());
         currentNode.setG(gscore);
@@ -85,7 +90,7 @@ public class IDAStar {
         if (f > threshold) {
             return f;
         }
-        if (currentNode.getX() == xend && currentNode.getY() == yend) {
+        if (currentNode.getX() == this.xend && currentNode.getY() == this.yend) {
             this.now = currentNode;
             return -1.0;
         }
@@ -113,12 +118,22 @@ public class IDAStar {
         }
         return min;
     }
-    
+        /**
+     * Function to check if two nodes are diagonal
+     * @param x change in x
+     * @param y change in y
+     * @return True if diagonal
+     */
     private boolean isDiagonal(Node parent, int x, int y) {
         return parent.getX() != x && parent.getY() != y;
     }
     
-    
+    /**
+     * Adds the neighbors of current node to 
+     * neighborsList data structure
+     * @param currentNode 
+     * @return list of neighbors
+     */
     private NeighborsList neighborNodes(Node currentNode) {
         NeighborsList neighbors = new NeighborsList();
         Node node;
@@ -128,8 +143,6 @@ public class IDAStar {
                 int newX = currentNode.getX() + x;
                 int newY = currentNode.getY() + y;
                 if ((x != 0 || y != 0) // not this.now
-                    && currentNode.getX() + x >= 0 && currentNode.getX() + x < this.map[0].length // check boundaries
-                    && currentNode.getY() + y >= 0 && currentNode.getY() + y < this.map.length
                     && this.map[newY][newX] != -1 // check if walkable
                     && !visited[y + 1][x + 1]) { // check if not already done
                         double cost;

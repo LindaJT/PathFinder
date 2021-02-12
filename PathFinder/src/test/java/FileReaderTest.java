@@ -1,10 +1,7 @@
 
 
 import pathFinder.FileReader;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -20,10 +17,12 @@ public class FileReaderTest {
     
     @Test
     public void readFileReturnsCorrectArray() {
-        int[][] map = {{0, 0, 0, 0, -1, -1, 0},
-                        {0, 0, -1 -1, -1, 0, 0},
-                        {0, 0, 0, -1, -1, 0, 0},
-                        {0, 0, 0, 0, 0, 0, 0}};
+        int[][] map = {{-1, -1, -1, -1, -1, -1, -1, -1, -1}, 
+                        {-1, 0, 0, 0, 0, -1, -1, 0, -1},
+                        {-1, 0, 0, -1, -1, -1, 0, 0, -1},
+                        {-1, 0, 0, 0, -1, -1, 0, 0, -1},
+                        {-1, 0, 0, 0, 0, 0, 0, 0, -1},
+                        {-1, -1, -1, -1, -1, -1, -1, -1, -1}};
         int[][] returnedMap = this.reader.readFile("test.txt");
         assertEquals(map.length, returnedMap.length);
         assertEquals(map[0].length, returnedMap[0].length);
