@@ -6,6 +6,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import pathFinder.util.Path;
 
 /**
  *
@@ -32,19 +33,19 @@ public class AStarTest {
     
     @Test
     public void findPathToReturnsAList() {
-        List<Node> path = astar.findPathTo(2, 3);
-        assertFalse(path.isEmpty());
+        Path path = astar.findPathTo(2, 3);
+        assertFalse(path.getSize()== 0);
     }
     
     @Test
     public void pathIsCorrectLength() {
-        List<Node> path = astar.findPathTo(2, 3);
-        assertEquals(3, path.size());
+        Path path = astar.findPathTo(2, 3);
+        assertEquals(3, path.getSize());
     }
     
     public void sameStartAndEndReturnsEmptyList() {
-        List<Node> path = astar.findPathTo(1, 1);
-        assertTrue(path.isEmpty());
+        Path path = astar.findPathTo(1, 1);
+        assertEquals(path.getSize(), 0);
     }
     
 

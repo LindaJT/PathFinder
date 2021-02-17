@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 import pathFinder.util.MinHeap;
+import pathFinder.util.Path;
 
 /**
  * Finding shortest path with AStar
@@ -47,24 +48,20 @@ public class AStar {
      * @param y goal y coordinate
      * @return List of nodes on the found path
      */
-        public List<Node> findPathTo(int x, int y) {
+        public Path findPathTo(int x, int y) {
         this.xend = x;
         this.yend = y;
-       // this.closed.add(this.now);
         addNeigborsToOpenList();
-        while (this.heap.getSize() > 0    /*!this.open.isEmpty() this.now.getX() != this.xend || this.now.getY() != this.yend*/) {
-           /* if (this.open.isEmpty()) { 
-                return null;
-            }*/
+        while (this.heap.getSize() > 0) {
             this.now = this.heap.remove(); 
-          //  this.closed.add(this.now);
             if (this.now.getX() == this.xend && this.now.getY() == this.yend) {
-                this.path.add(0, this.now);
+                Path path = new Path((int) this.now.getG() + 1);
+                path.insert(this.now);
                 while (this.now.getX() != this.xstart || this.now.getY() != this.ystart) {
                     this.now = this.now.getParent();
-                    this.path.add(0, this.now);
+                    path.insert(this.now);
                 }
-                return this.path;
+                return path;
             }
             addNeigborsToOpenList();
         }
