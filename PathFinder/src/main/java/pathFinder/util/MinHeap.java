@@ -116,14 +116,6 @@ public class MinHeap {
         } 
     } 
   
-    /**
-     * Function to build the min heap
-     */
-    public void minHeap() { 
-        for (int pos = (size / 2); pos >= 1; pos--) { 
-            minHeapify(pos); 
-        } 
-    } 
   
     /**
      * Function to remove and return the minimum 

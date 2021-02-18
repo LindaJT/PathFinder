@@ -72,19 +72,6 @@ public class AStar {
     public double[][] getCostSoFar() {
         return costSoFar;
     }
-        
-        
-
-        /**
-         * To check if node is on a list
-         * 
-         * @param nodes list to be searched
-         * @param node node to be found
-         * @return true if node is found
-         */
-    private static boolean findNeighborInList(PriorityQueue<Node> nodes, Node node) {
-        return nodes.stream().anyMatch((n) -> (n.getX() == node.getX() && n.getY() == node.getY()));
-    }
 
     /**
      * Calculates diagonal distance (uniform cost) to the goal

@@ -7,3 +7,7 @@ A-starille annetaan konstruktorissa käytettävä kartta kaksiulotteisena tauluk
 Vaaka- tai pystysuunnassa liikkumisen kulu on 1 ja diagonaalissa liikkumisen \sqrt{2} . 
 
 ## IDA-star
+
+## Suorituskykytestaus
+
+Suorituskykyä testataan Moving AI Labin Berliinin kartalla vertailemalla A-starin ja IDA-starin suoritusnopeuksia eri syötteillä. Syötteet ovat Moving AI Labin skenaarioista. 
