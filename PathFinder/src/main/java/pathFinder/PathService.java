@@ -5,10 +5,12 @@
  */
 package pathFinder;
 
+import pathFinder.util.Node;
+import pathFinder.algorithms.IDAStar;
+import pathFinder.algorithms.AStar;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import pathFinder.util.Path;
@@ -60,7 +62,6 @@ public class PathService {
             return -1.;
         }
         AStar astar = new AStar(this.map, xstart, ystart);
-     //   List<Node> path = astar.findPathTo(xend, yend);
         Path path = astar.findPathTo(xend, yend).flip();
         this.astarMap = new int[this.map.length][this.map[0].length];
         for (int x = 0; x < this.map.length; x++) {
@@ -69,10 +70,6 @@ public class PathService {
             }
         }
         if (path != null) {
-     /*       path.forEach((n) -> {
-                System.out.print("[" + n.getX() + ", " + n.getY() + "] ");
-                this.astarMap[n.getY()][n.getX()] = 1;
-            });*/
               for (int i = 0; i < path.getSize(); i++) {
                   Node n = path.getNode(i);
                   System.out.print("[" + n.getX() + ", " + n.getY() + ", " + n.getG() + "] ");
@@ -136,18 +133,19 @@ public class PathService {
             return -1.;
         }
         IDAStar idastar = new IDAStar(this.map, xstart, ystart);
-        List<Node> idaPath = idastar.findPathTo(xend, yend);
+        Path path = idastar.findPathTo(xend, yend).flip();
         this.idastarMap = new int[this.map.length][this.map[0].length];
         for (int x = 0; x < this.map.length; x++) {
             for (int y = 0; y < this.map[0].length; y++) {
                 this.idastarMap[x][y] = this.map[x][y];
             }
         }
-        if (idaPath != null) {
-            idaPath.forEach((n) -> {
-                System.out.print("[" + n.getX() + ", " + n.getY() + "] ");
-                this.idastarMap[n.getY()][n.getX()] = 1;
-            });
+        if (path != null) {
+            for (int i = 0; i < path.getSize(); i++) {
+                  Node n = path.getNode(i);
+                  System.out.print("[" + n.getX() + ", " + n.getY() + ", " + n.getG() + "] ");
+                  this.idastarMap[n.getY()][n.getX()] = 1;
+              }
         } else {
             return 0.;
         }
@@ -177,7 +175,7 @@ public class PathService {
             }
             System.out.println();
         }*/
-        double distance = (double) idaPath.get(idaPath.size() - 1).getG();
+        double distance = (double) path.getNode(path.getSize() - 1).getG();
         return distance;
     }
     

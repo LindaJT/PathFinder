@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pathFinder;
+package pathFinder.algorithms;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.PriorityQueue;
+import pathFinder.util.Node;
 import pathFinder.util.MinHeap;
 import pathFinder.util.Path;
 
@@ -18,7 +17,6 @@ import pathFinder.util.Path;
 public class AStar {
     
     private final MinHeap heap;
-    private final List<Node> path;
     private final int[][] map;
     private Node now;
     private final int xstart;
@@ -29,7 +27,6 @@ public class AStar {
     
     public AStar(int[][] map, int xstart, int ystart) {
         
-        this.path = new ArrayList<>();
         this.map = map;
         this.now = new Node(null, xstart, ystart, 0, 0);
         this.xstart = xstart;

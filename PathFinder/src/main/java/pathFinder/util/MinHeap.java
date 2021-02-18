@@ -1,8 +1,6 @@
 
 package pathFinder.util;
 
-import pathFinder.Node;
-
 /**
  * Minimum heap for AStar implementation
  * 

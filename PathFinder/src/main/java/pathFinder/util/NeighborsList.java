@@ -1,8 +1,6 @@
 
 package pathFinder.util;
 
-import pathFinder.Node;
-
 /**
  * Data structure to store neighboring nodes
  * @author linjokin

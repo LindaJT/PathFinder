@@ -4,15 +4,10 @@
  * and open the template in the editor.
  */
 
-import java.util.List;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import pathFinder.IDAStar;
-import pathFinder.Node;
+import pathFinder.algorithms.IDAStar;
+import pathFinder.util.Path;
 
 /**
  *
@@ -36,19 +31,19 @@ public class IDAStarTest {
    
     @Test
     public void findPathToReturnsAList() {
-        List<Node> path = ida.findPathTo(10, 2);
-        assertFalse(path.isEmpty());
+        Path path = ida.findPathTo(10, 2);
+        assertFalse(path.getSize() == 0);
     }
     
     @Test
     public void pathIsCorrectLength() {
-        List<Node> path = ida.findPathTo(10, 2);
-        assertEquals(9, path.size());
+        Path path = ida.findPathTo(10, 2);
+        assertEquals(9, path.getSize());
     }
     
     public void sameStartAndEndReturnsEmptyList() {
-        List<Node> path = ida.findPathTo(1, 1);
-        assertTrue(path.isEmpty());
+        Path path = ida.findPathTo(1, 1);
+        assertEquals(path.getSize(), 0);
     }
     
 }

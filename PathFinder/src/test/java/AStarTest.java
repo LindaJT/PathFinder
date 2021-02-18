@@ -1,7 +1,7 @@
 
 
-import pathFinder.AStar;
-import pathFinder.Node;
+import pathFinder.algorithms.AStar;
+import pathFinder.util.Node;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;

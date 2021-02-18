@@ -4,7 +4,7 @@ package util;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import pathFinder.Node;
+import pathFinder.util.Node;
 import pathFinder.util.MinHeap;
 
 /**

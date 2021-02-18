@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pathFinder;
+package pathFinder.algorithms;
 
 import java.util.ArrayList;
 import java.util.List;
 import pathFinder.util.NeighborsList;
+import pathFinder.util.Node;
+import pathFinder.util.Path;
 
 /**
  *
@@ -41,7 +43,7 @@ public class IDAStar {
      * @param goalY goal y coordinate
      * @return List of nodes on the found path
      */
-    public List<Node> findPathTo(int goalX, int goalY) {
+    public Path findPathTo(int goalX, int goalY) {
         this.xend = goalX;
         this.yend = goalY;
         double threshold = this.distance(xstart, ystart);
@@ -51,12 +53,15 @@ public class IDAStar {
         while (true) {
             double temp = search(startNode, 0, threshold);
             if (temp == -1.0) {
-                this.path.add(0, this.now);
-                while (this.now.getX() != this.xstart || this.now.getY() != this.ystart) {
-                    this.now = this.now.getParent();
-                    this.path.add(0, this.now);
+                if (this.now.getX() == this.xend && this.now.getY() == this.yend) {
+                    Path path = new Path((int) this.now.getG() + 1);
+                    path.insert(this.now);
+                    while (this.now.getX() != this.xstart || this.now.getY() != this.ystart) {
+                        this.now = this.now.getParent();
+                        path.insert(this.now);
+                    }
+                    return path;
                 }
-                return this.path;
             }
             threshold = temp;
         }
