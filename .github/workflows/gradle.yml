@@ -15,7 +15,9 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.11
-    - name: Grant execute permission for gradlew
+    - name: go to directory
+      run: cd PathFinder
+    - name: Grant execute permission for gradle
       run: chmod +x gradlew
     - name: Test with Gradle
       run: ./gradlew test
