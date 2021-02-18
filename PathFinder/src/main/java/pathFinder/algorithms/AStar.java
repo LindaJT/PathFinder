@@ -5,7 +5,6 @@
  */
 package pathFinder.algorithms;
 
-import java.util.PriorityQueue;
 import pathFinder.util.Node;
 import pathFinder.util.MinHeap;
 import pathFinder.util.Path;
