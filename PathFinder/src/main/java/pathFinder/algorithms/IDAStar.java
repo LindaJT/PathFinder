@@ -5,8 +5,6 @@
  */
 package pathFinder.algorithms;
 
-import java.util.ArrayList;
-import java.util.List;
 import pathFinder.util.NeighborsList;
 import pathFinder.util.Node;
 import pathFinder.util.Path;
@@ -16,7 +14,6 @@ import pathFinder.util.Path;
  * @author linjokin
  */
 public class IDAStar {
-    private final List<Node> path;
     private final int[][] map;
     private Node now;
     private final int xstart;
@@ -30,7 +27,6 @@ public class IDAStar {
         this.xstart = xstart;
         this.ystart = ystart;
         this.now = new Node(null, xstart, ystart, 0, 0);
-        this.path = new ArrayList<>();
         this.costSoFar = new double[this.map.length][this.map[0].length];
         this.costSoFar[0][0] = 0.;
         this.inStack = new boolean[this.map.length][this.map[0].length];

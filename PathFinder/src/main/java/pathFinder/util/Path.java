@@ -30,7 +30,7 @@ public class Path {
     
     public Path flip() {
         Path reversed = new Path(this.size);
-        for (int i = this.size -1; i>=0; i--) {
+        for (int i = this.size - 1; i >= 0; i--) {
             reversed.insert(this.nodes[i]);
         }
         return reversed;
