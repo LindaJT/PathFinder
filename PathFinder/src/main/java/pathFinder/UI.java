@@ -1,6 +1,7 @@
 
 package pathFinder;
 
+import java.io.File;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -11,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 
@@ -29,11 +31,11 @@ public class UI extends Application {
         HBox inputPane = new HBox(10);
         mainPane.setPadding(new Insets(10, 10, 10, 10));
         Label fileLabel = new Label("Add map file");
-        TextField fileInput = new TextField();
+     //   TextField fileInput = new TextField();
         Text fileText = new Text("");
-        Button fileButton = new Button("Submit");
+    //    Button fileButton = new Button("Submit");
         
-        fileButton.setOnAction(e-> {
+      /*  fileButton.setOnAction(e-> {
             String fileName = fileInput.getText();
             boolean success = service.readFile(fileName);
             if (success) {
@@ -41,7 +43,20 @@ public class UI extends Application {
             } else {
                 fileText.setText("File not found or not readable");
             }
-        });
+        });*/
+      
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Add map file");
+        File file = chooser.showOpenDialog(primaryStage);
+        if (file != null) {
+            String fileName = file.getName();
+            boolean success = service.readFile(fileName);
+            if (success) {
+                fileText.setText("File added");
+            } else {
+                fileText.setText("File not found or not readable");
+            }
+        }
         
         Text startCoordinatesText = new Text("Give start coordinates: ");
         Label xstartLabel = new Label("x start: ");
@@ -108,7 +123,7 @@ public class UI extends Application {
         textPane.getChildren().addAll(empty, distanceDes, timeText);
         optionsPane.getChildren().addAll(textPane, astarPane, idastarPane);
         
-        inputPane.getChildren().addAll(fileInput, fileButton);
+    //    inputPane.getChildren().add(chooser);
         
         
         mainPane.getChildren().addAll(fileLabel, inputPane, fileText, startCoordinatesText, xstartLabel, xstartInput,
