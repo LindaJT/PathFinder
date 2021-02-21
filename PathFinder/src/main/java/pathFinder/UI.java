@@ -87,6 +87,7 @@ public class UI extends Application {
         Text empty = new Text("    ");
         Text distanceDes = new Text("Distance:");
         Text timeText = new Text("Time (in milliseconds):");
+        Text infoText = new Text(" ");
         
         aStarButton.setOnAction(e -> {
             int xstart = Integer.parseInt(xstartInput.getText());
@@ -101,6 +102,11 @@ public class UI extends Application {
             aStarDistance.setText(text);
             aStarTime.setText(text2);
             service.drawPath(true);
+            if (distance < 0.) {
+                infoText.setText("Path not found");
+            } else {
+                infoText.setText("Path found");
+            }
         });
         
         idaStarButton.setOnAction(e -> {
@@ -116,11 +122,16 @@ public class UI extends Application {
             idaStarDistance.setText(text);
             idaStarTime.setText(text2);
             service.drawPath(false);
+            if (distance < 0.) {
+                infoText.setText("Path not found");
+            } else {
+                infoText.setText("Path found");
+            }
         });
         
         astarPane.getChildren().addAll(aStarButton, aStarDistance, aStarTime);
         idastarPane.getChildren().addAll(idaStarButton, idaStarDistance, idaStarTime);
-        textPane.getChildren().addAll(empty, distanceDes, timeText);
+        textPane.getChildren().addAll(empty, distanceDes, timeText, infoText);
         optionsPane.getChildren().addAll(textPane, astarPane, idastarPane);
         
     //    inputPane.getChildren().add(chooser);
