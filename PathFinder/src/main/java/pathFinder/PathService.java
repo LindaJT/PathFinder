@@ -77,15 +77,15 @@ public class PathService {
             return 0.;
         }
         
-        double[][] costs = astar.getCostSoFar();
+        boolean[][] visited = astar.getVisited();
         for (int x = 0; x < this.map.length; x++) {
             for (int y = 0; y < this.map[0].length; y++) {
-                if (costs[x][y] > 1 && this.astarMap[x][y] != 1) {
-                    this.astarMap[x][y] = (int) Math.ceil(costs[x][y]);
+                if (visited[x][y] && this.astarMap[x][y] != 1) {
+                    this.astarMap[x][y] = 2;
                 }
             }
         }
-        
+
      /*   System.out.println();
         for (int[] mazerow : astarMap) {
             for (int mazeentry : mazerow) {
@@ -147,17 +147,17 @@ public class PathService {
         } else {
             return 0.;
         }
-  /*      System.out.println("");
-        DecimalFormat df = new DecimalFormat("#.##");
-        double[][] costs = idastar.getCostSoFar();
-        for (int x = 0; x < costs.length; x++) {
-            for (int y = 0; y < costs[0].length; y++) {
-                System.out.print(df.format(costs[x][y]) + " ");
+        boolean[][] visited = idastar.getVisited();
+        for (int x = 0; x < this.map.length; x++) {
+            for (int y = 0; y < this.map[0].length; y++) {
+                if (visited[x][y] && this.idastarMap[x][y] != 1) {
+                    this.idastarMap[x][y] = 2;
+                }
             }
-            System.out.println("");
         }
+
         
-        System.out.println();
+   /*     System.out.println();
         for (int[] mazerow : idastarMap) {
             for (int mazeentry : mazerow) {
                 switch (mazeentry) {
@@ -211,6 +211,19 @@ public class PathService {
             lines.add(line);
             line = "";
             }
+            try {
+            FileWriter fileWriter = new FileWriter("pathAStar.txt");
+            BufferedWriter writer = new BufferedWriter(fileWriter);
+            writer.write("A Star Path:");
+            writer.newLine();
+            for (int i = 0; i < lines.size(); i++) {
+                writer.write(lines.get(i));
+                writer.newLine();
+            }
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Virhe: " + e.getMessage());
+        }
         } else {
             for (int[] maprow : this.idastarMap) {
                 for (int mapentry : maprow) {
@@ -222,19 +235,21 @@ public class PathService {
                         case -1:
                             c = "@";
                             break;
-                        default:
+                        case 1:
                             c = "#";
+                            break;
+                        default:
+                            c = "*";
                     }
                 line = line + c;
             }
             lines.add(line);
             line = "";
             }
-        }
-        try {
-            FileWriter fileWriter = new FileWriter("path.txt");
+            try {
+            FileWriter fileWriter = new FileWriter("pathIDA.txt");
             BufferedWriter writer = new BufferedWriter(fileWriter);
-            writer.write("Path:");
+            writer.write("IDA Star Path:");
             writer.newLine();
             for (int i = 0; i < lines.size(); i++) {
                 writer.write(lines.get(i));
@@ -243,6 +258,7 @@ public class PathService {
             writer.close();
         } catch (IOException e) {
             System.out.println("Virhe: " + e.getMessage());
+        }
         }
     }
     

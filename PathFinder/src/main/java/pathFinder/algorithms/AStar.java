@@ -23,6 +23,7 @@ public class AStar {
     private int xend, yend;
     private Node[][] cameFrom;
     private double[][] costSoFar;
+    private boolean[][] visited;
     
     public AStar(int[][] map, int xstart, int ystart) {
         
@@ -35,6 +36,8 @@ public class AStar {
         this.costSoFar = new double[this.map.length][this.map[0].length];
         this.cameFrom[0][0] = null;
         this.costSoFar[0][0] = 0;
+        this.visited = new boolean[this.map.length][this.map[0].length];
+        this.visited[ystart][xstart] = true;
     }
     
     /**
@@ -50,6 +53,7 @@ public class AStar {
         addNeigborsToOpenList();
         while (this.heap.getSize() > 0) {
             this.now = this.heap.remove(); 
+            this.visited[this.now.getY()][this.now.getX()] = true;
             if (this.now.getX() == this.xend && this.now.getY() == this.yend) {
                 Path path = new Path((int) this.now.getG() + 1);
                 path.insert(this.now);
@@ -63,10 +67,11 @@ public class AStar {
         }
         return null;
     }
-        
-        public Node[][] getPath() {
-            return this.cameFrom;
-        }
+
+    public boolean[][] getVisited() {
+        return visited;
+    }
+    
 
     public double[][] getCostSoFar() {
         return costSoFar;

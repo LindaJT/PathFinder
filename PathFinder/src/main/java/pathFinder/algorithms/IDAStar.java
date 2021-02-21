@@ -16,13 +16,16 @@ public class IDAStar {
     private final int ystart;
     private int xend, yend;
     private final boolean[][] inStack;
+    private boolean[][] visited;
     
     public IDAStar(int[][] map, int xstart, int ystart) {
         this.map = map;
         this.xstart = xstart;
         this.ystart = ystart;
-        this.now = new Node(null, xstart, ystart, 0, 0);;
+        this.now = new Node(null, xstart, ystart, 0, 0);
         this.inStack = new boolean[this.map.length][this.map[0].length];
+        this.visited = new boolean[this.map.length][this.map[0].length];
+        this.visited[ystart][xstart] = true;
     }
     
         /**
@@ -81,6 +84,7 @@ public class IDAStar {
         double f = gscore + this.distance(currentNode.getX(), currentNode.getY());
         currentNode.setG(gscore);
         currentNode.setH(this.distance(currentNode.getX(), currentNode.getY()));
+        this.visited[currentNode.getY()][currentNode.getX()] = true;
         if (f > threshold) {
             return f;
         }
@@ -131,20 +135,21 @@ public class IDAStar {
     private NeighborsList neighborNodes(Node currentNode) {
         NeighborsList neighbors = new NeighborsList();
         Node node;
-        boolean[][] visited = new boolean[3][3];
+        boolean[][] visitedNeighbors = new boolean[3][3];
         for (int x = -1; x <= 1; x++) {
             for (int y = -1; y <= 1; y++) {
                 int newX = currentNode.getX() + x;
                 int newY = currentNode.getY() + y;
                 if ((x != 0 || y != 0) // not this.now
                     && this.map[newY][newX] != -1 // check if walkable
-                    && !visited[y + 1][x + 1]) { // check if not already done
+                    && !visitedNeighbors[y + 1][x + 1]) { // check if not already done
                         double cost;
                         if (currentNode.getX() != currentNode.getX() + x && currentNode.getY() != currentNode.getY() + y) {
                             cost = currentNode.getG() + Math.sqrt(2);
                       } else {
                             cost = currentNode.getG() + 1;
                       } 
+                        visitedNeighbors[y + 1][x + 1] = true;
                         double dist = distance(newX, newY);
                         node = new Node(currentNode, newX, newY, cost, dist);
                         neighbors.insert(node);
@@ -153,5 +158,13 @@ public class IDAStar {
         }
         return neighbors;
     }
+
+
+    public boolean[][] getVisited() {
+        return visited;
+    }
+    
+    
+    
     
 }

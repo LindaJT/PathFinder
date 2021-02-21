@@ -65,11 +65,5 @@ public class Node implements Comparable<Node> {
         Node that = n;
         return (int) ((this.g + this.h) - (that.g + that.h));
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        return hash;
-    }  
 }
 
