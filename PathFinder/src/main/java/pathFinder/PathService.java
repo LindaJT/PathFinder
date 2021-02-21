@@ -65,9 +65,7 @@ public class PathService {
         Path path = astar.findPathTo(xend, yend).flip();
         this.astarMap = new int[this.map.length][this.map[0].length];
         for (int x = 0; x < this.map.length; x++) {
-            for (int y = 0; y < this.map[0].length; y++) {
-                this.astarMap[x][y] = this.map[x][y];
-            }
+            System.arraycopy(this.map[x], 0, this.astarMap[x], 0, this.map[0].length);
         }
         if (path != null) {
               for (int i = 0; i < path.getSize(); i++) {
@@ -83,7 +81,7 @@ public class PathService {
         for (int x = 0; x < this.map.length; x++) {
             for (int y = 0; y < this.map[0].length; y++) {
                 if (costs[x][y] > 1 && this.astarMap[x][y] != 1) {
-                    this.astarMap[x][y] = (int) costs[x][y];
+                    this.astarMap[x][y] = (int) Math.ceil(costs[x][y]);
                 }
             }
         }

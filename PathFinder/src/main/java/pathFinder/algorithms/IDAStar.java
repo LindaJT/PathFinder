@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package pathFinder.algorithms;
 
 import pathFinder.util.NeighborsList;
@@ -10,7 +6,7 @@ import pathFinder.util.Node;
 import pathFinder.util.Path;
 
 /**
- *
+ * Iterative deepening A* path finding algorithm
  * @author linjokin
  */
 public class IDAStar {
@@ -19,16 +15,13 @@ public class IDAStar {
     private final int xstart;
     private final int ystart;
     private int xend, yend;
-    private final double[][] costSoFar;
     private final boolean[][] inStack;
     
     public IDAStar(int[][] map, int xstart, int ystart) {
         this.map = map;
         this.xstart = xstart;
         this.ystart = ystart;
-        this.now = new Node(null, xstart, ystart, 0, 0);
-        this.costSoFar = new double[this.map.length][this.map[0].length];
-        this.costSoFar[0][0] = 0.;
+        this.now = new Node(null, xstart, ystart, 0, 0);;
         this.inStack = new boolean[this.map.length][this.map[0].length];
     }
     
