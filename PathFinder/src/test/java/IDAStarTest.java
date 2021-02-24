@@ -36,14 +36,16 @@ public class IDAStarTest {
     }
     
     @Test
-    public void pathIsCorrectLength() {
+    public void correctNumberOfNodesOnThePath() {
         Path path = ida.findPathTo(10, 2);
         assertEquals(9, path.getSize());
+        Path path2 = ida.findPathTo(7, 4);
+        assertEquals(6, path2.getSize());
     }
     
-    public void sameStartAndEndReturnsEmptyList() {
-        Path path = ida.findPathTo(1, 1);
-        assertEquals(path.getSize(), 0);
+    @Test
+    public void pathLenghtIsCorrect() {
+        Path path2 = ida.findPathTo(7, 4);
+        assertEquals(5,  (int) path2.getNode(0).getG());
     }
-    
 }

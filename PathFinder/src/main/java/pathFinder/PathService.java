@@ -9,7 +9,6 @@ import pathFinder.util.Node;
 import pathFinder.algorithms.IDAStar;
 import pathFinder.algorithms.AStar;
 import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,8 +72,6 @@ public class PathService {
                   System.out.print("[" + n.getX() + ", " + n.getY() + ", " + n.getG() + "] ");
                   this.astarMap[n.getY()][n.getX()] = 1;
               }
-        } else {
-            return 0.;
         }
         
         boolean[][] visited = astar.getVisited();
@@ -144,9 +141,8 @@ public class PathService {
                   System.out.print("[" + n.getX() + ", " + n.getY() + ", " + n.getG() + "] ");
                   this.idastarMap[n.getY()][n.getX()] = 1;
               }
-        } else {
-            return 0.;
-        }
+        } 
+        
         boolean[][] visited = idastar.getVisited();
         for (int x = 0; x < this.map.length; x++) {
             for (int y = 0; y < this.map[0].length; y++) {
@@ -187,78 +183,11 @@ public class PathService {
      * @param astar True, if using aStar map, false for idaStar map
      */
     public void drawPath(Boolean astar) {
-        List<String> lines = new ArrayList<>();
-        String line = "";
+        PathWriter writer = new PathWriter();
         if (astar) {
-            for (int[] maprow : this.astarMap) {
-                for (int mapentry : maprow) {
-                    String c = "";
-                    switch (mapentry) {
-                        case 0:
-                            c = ".";
-                            break;
-                        case -1:
-                            c = "@";
-                            break;
-                        case 1:
-                            c = "#";
-                            break;
-                        default:
-                            c = "*";
-                    }
-                line = line + c;
-            }
-            lines.add(line);
-            line = "";
-            }
-            try {
-            FileWriter fileWriter = new FileWriter("pathAStar.txt");
-            BufferedWriter writer = new BufferedWriter(fileWriter);
-            writer.write("A Star Path:");
-            writer.newLine();
-            for (int i = 0; i < lines.size(); i++) {
-                writer.write(lines.get(i));
-                writer.newLine();
-            }
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("Virhe: " + e.getMessage());
-        }
+            writer.drawAstarPath(this.astarMap);
         } else {
-            for (int[] maprow : this.idastarMap) {
-                for (int mapentry : maprow) {
-                    String c = "";
-                    switch (mapentry) {
-                        case 0:
-                            c = ".";
-                            break;
-                        case -1:
-                            c = "@";
-                            break;
-                        case 1:
-                            c = "#";
-                            break;
-                        default:
-                            c = "*";
-                    }
-                line = line + c;
-            }
-            lines.add(line);
-            line = "";
-            }
-            try {
-            FileWriter fileWriter = new FileWriter("pathIDA.txt");
-            BufferedWriter writer = new BufferedWriter(fileWriter);
-            writer.write("IDA Star Path:");
-            writer.newLine();
-            for (int i = 0; i < lines.size(); i++) {
-                writer.write(lines.get(i));
-                writer.newLine();
-            }
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("Virhe: " + e.getMessage());
-        }
+            writer.drawIdaPath(this.idastarMap);
         }
     }
     

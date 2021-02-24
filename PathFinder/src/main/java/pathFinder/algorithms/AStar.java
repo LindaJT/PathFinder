@@ -71,11 +71,6 @@ public class AStar {
     public boolean[][] getVisited() {
         return visited;
     }
-    
-
-    public double[][] getCostSoFar() {
-        return costSoFar;
-    }
 
     /**
      * Calculates diagonal distance (uniform cost) to the goal
@@ -117,8 +112,8 @@ public class AStar {
                     } else {
                         cost = this.costSoFar[this.now.getY()][this.now.getX()] + 1;
                     }
-                    if (costSoFar[newY][newX] == 0. || cost < costSoFar[newY][newX]) {
-                        costSoFar[newY][newX] = cost;
+                    if (this.costSoFar[newY][newX] == 0. || cost < this.costSoFar[newY][newX]) {
+                        this.costSoFar[newY][newX] = cost;
                         double dist = distance(newX, newY);
                         node = new Node(this.now, newX, newY, cost, dist);
                         this.heap.insert(node);

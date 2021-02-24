@@ -38,15 +38,21 @@ public class AStarTest {
     }
     
     @Test
-    public void pathIsCorrectLength() {
+    public void pathHasCorrectNumberOfNodes() {
         Path path = astar.findPathTo(2, 3);
         assertEquals(3, path.getSize());
     }
     
-    public void sameStartAndEndReturnsEmptyList() {
-        Path path = astar.findPathTo(1, 1);
-        assertEquals(path.getSize(), 0);
+    @Test
+    public void pathIsCorrectLength() {
+        Path path = astar.findPathTo(6, 3);
+        assertEquals(5, (int) path.getNode(0).getG());
     }
     
+    @Test
+    public void straightPathIsCorrectLength() {
+        Path path = astar.findPathTo(1, 4);
+        assertEquals(3, (int) path.getNode(0).getG());
+    }
 
 }
