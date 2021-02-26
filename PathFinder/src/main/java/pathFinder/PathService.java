@@ -8,10 +8,6 @@ package pathFinder;
 import pathFinder.util.Node;
 import pathFinder.algorithms.IDAStar;
 import pathFinder.algorithms.AStar;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import pathFinder.util.Path;
 
 /**
@@ -66,13 +62,13 @@ public class PathService {
         for (int x = 0; x < this.map.length; x++) {
             System.arraycopy(this.map[x], 0, this.astarMap[x], 0, this.map[0].length);
         }
-        if (path != null) {
-              for (int i = 0; i < path.getSize(); i++) {
-                  Node n = path.getNode(i);
-                  System.out.print("[" + n.getX() + ", " + n.getY() + ", " + n.getG() + "] ");
-                  this.astarMap[n.getY()][n.getX()] = 1;
-              }
+
+        for (int i = 0; i < path.getSize(); i++) {
+            Node n = path.getNode(i);
+            System.out.print("[" + n.getX() + ", " + n.getY() + ", " + n.getG() + "] ");
+            this.astarMap[n.getY()][n.getX()] = 1;
         }
+        
         
         boolean[][] visited = astar.getVisited();
         for (int x = 0; x < this.map.length; x++) {
@@ -135,14 +131,11 @@ public class PathService {
                 this.idastarMap[x][y] = this.map[x][y];
             }
         }
-        if (path != null) {
-            for (int i = 0; i < path.getSize(); i++) {
-                  Node n = path.getNode(i);
-                  System.out.print("[" + n.getX() + ", " + n.getY() + ", " + n.getG() + "] ");
-                  this.idastarMap[n.getY()][n.getX()] = 1;
-              }
-        } 
-        
+        for (int i = 0; i < path.getSize(); i++) {
+            Node n = path.getNode(i);
+            System.out.print("[" + n.getX() + ", " + n.getY() + ", " + n.getG() + "] ");
+            this.idastarMap[n.getY()][n.getX()] = 1;
+        }
         boolean[][] visited = idastar.getVisited();
         for (int x = 0; x < this.map.length; x++) {
             for (int y = 0; y < this.map[0].length; y++) {
@@ -171,10 +164,6 @@ public class PathService {
         }*/
         double distance = (double) path.getNode(path.getSize() - 1).getG();
         return distance;
-    }
-    
-    public int[][] getMap() {
-        return map;
     }
     
     /**

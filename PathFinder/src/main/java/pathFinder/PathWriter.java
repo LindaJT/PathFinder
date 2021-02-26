@@ -21,7 +21,7 @@ public class PathWriter {
      * Draws the map, found path and visited nodes to a file
      * @param astarMap map with path and visited nodes
      */
-    void drawAstarPath(int[][] astarMap) {
+    public void drawAstarPath(int[][] astarMap) {
         List<String> lines = new ArrayList<>();
         String line = "";
         for (int[] maprow : astarMap) {
@@ -64,7 +64,7 @@ public class PathWriter {
      * Draws the map, found path and visited nodes to a file
      * @param idastarMap map with path and visited nodes
      */
-    void drawIdaPath(int[][] idastarMap) {
+    public void drawIdaPath(int[][] idastarMap) {
         List<String> lines = new ArrayList<>();
         String line = "";
         for (int[] maprow : idastarMap) {

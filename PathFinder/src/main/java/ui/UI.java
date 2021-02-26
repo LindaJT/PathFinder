@@ -1,5 +1,5 @@
 
-package pathFinder;
+package ui;
 
 import java.io.File;
 import javafx.scene.control.Button;
@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import pathFinder.PathService;
 
 
 public class UI extends Application {
