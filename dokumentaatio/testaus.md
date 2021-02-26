@@ -21,9 +21,13 @@ algorithms-paketti:
 Ohjelman toimintaa voi testata käyttöliittymän kautta. Käyttöliittymä kertoo kummallekin algoritmille löytyikö reitti, reitin pituuden sekä reitin etsintään kuluneen ajan. Löytynyttä reittiä sekä algoritmin vierailemia ruutuja voi tarkastella results-kansion pathAStar.txt ja pathIDA.txt tiedostoista. 
 
 Karttojen tulkitsiminen:
+
 @	este
+
 .	kulkukelpoinen
+
 '#' 	reitti
-*	vierailtu ruutu
+
+'*'	vierailtu ruutu
 
 Suorituskykytestauksessa testataan algoritmien suoritukseen kuluneita aikoja. Testaamiseen käytetään Moving AI Labin Berliinin karttaa, sekä siihen tehtyjä valmiita skenaarioita.
