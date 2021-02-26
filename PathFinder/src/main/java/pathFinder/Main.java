@@ -5,6 +5,8 @@
  */
 package pathFinder;
 
+import ui.UI;
+
 /**
  *
  * @author linjokin
