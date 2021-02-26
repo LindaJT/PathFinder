@@ -15,6 +15,12 @@ import java.util.List;
  */
 public class PathWriter {
 
+    
+    /**
+     * For visualization
+     * Draws the map, found path and visited nodes to a file
+     * @param astarMap map with path and visited nodes
+     */
     void drawAstarPath(int[][] astarMap) {
         List<String> lines = new ArrayList<>();
         String line = "";
@@ -40,7 +46,7 @@ public class PathWriter {
         line = "";
         }
         try {
-            FileWriter fileWriter = new FileWriter("pathAStar.txt");
+            FileWriter fileWriter = new FileWriter("results/pathAStar.txt");
             BufferedWriter writer = new BufferedWriter(fileWriter);
             writer.write("A Star Path:");
             writer.newLine();
@@ -53,7 +59,11 @@ public class PathWriter {
             System.out.println("Virhe: " + e.getMessage());
         }
     }
-
+    /**
+     * For visualization
+     * Draws the map, found path and visited nodes to a file
+     * @param idastarMap map with path and visited nodes
+     */
     void drawIdaPath(int[][] idastarMap) {
         List<String> lines = new ArrayList<>();
         String line = "";
@@ -79,7 +89,7 @@ public class PathWriter {
         line = "";
         }
         try {
-            FileWriter fileWriter = new FileWriter("pathIDA.txt");
+            FileWriter fileWriter = new FileWriter("results/pathIDA.txt");
             BufferedWriter writer = new BufferedWriter(fileWriter);
             writer.write("IDA Star Path:");
             writer.newLine();

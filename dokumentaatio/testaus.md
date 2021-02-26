@@ -1,5 +1,7 @@
 # Testausdokumentti
 
-Luokille on tehty yksikkötestit JUnitilla (poislukien UI-luokka).
+Luokille on tehty yksikkötestit JUnitilla (poislukien käyttöliittymästä vastaava UI-luokka).
 
-Testikattavuutta seurataan Jacocolla.
+Testikattavuutta seurataan Jacocolla. Testikattavuusraportti:
+
+
