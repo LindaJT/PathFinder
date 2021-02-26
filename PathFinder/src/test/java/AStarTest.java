@@ -33,25 +33,25 @@ public class AStarTest {
     
     @Test
     public void findPathToReturnsAList() {
-        Path path = astar.findPathTo(2, 3);
+        Path path = astar.findPathTo(2, 3, "uniformCost");
         assertFalse(path.getSize()== 0);
     }
     
     @Test
     public void pathHasCorrectNumberOfNodes() {
-        Path path = astar.findPathTo(2, 3);
+        Path path = astar.findPathTo(2, 3, "uniformCost");
         assertEquals(3, path.getSize());
     }
     
     @Test
     public void pathIsCorrectLength() {
-        Path path = astar.findPathTo(6, 3);
+        Path path = astar.findPathTo(6, 3, "uniformCost");
         assertEquals(5, (int) path.getNode(0).getG());
     }
     
     @Test
     public void straightPathIsCorrectLength() {
-        Path path = astar.findPathTo(1, 4);
+        Path path = astar.findPathTo(1, 4, "uniformCost");
         assertEquals(3, (int) path.getNode(0).getG());
     }
 

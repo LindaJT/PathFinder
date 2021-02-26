@@ -48,16 +48,17 @@ public class PathService {
      * @param ystart start point y coordinate
      * @param xend goal point x coordinate
      * @param yend goal point y coordinate
+     * @param heuristic chosen heuristic funtion
      * @return distance of the shortest path
      */
-    public Double aStarDistance(int xstart, int ystart, int xend, int yend) {
+    public Double aStarDistance(int xstart, int ystart, int xend, int yend, String heuristic) {
         if (xstart == xend && ystart == yend) {
             return 0.;
         } else if (this.map[ystart][xstart] == -1 || this.map[yend][xend] == -1) {
             return -1.;
         }
         AStar astar = new AStar(this.map, xstart, ystart);
-        Path path = astar.findPathTo(xend, yend).flip();
+        Path path = astar.findPathTo(xend, yend, heuristic).flip();
         this.astarMap = new int[this.map.length][this.map[0].length];
         for (int x = 0; x < this.map.length; x++) {
             System.arraycopy(this.map[x], 0, this.astarMap[x], 0, this.map[0].length);
@@ -115,16 +116,17 @@ public class PathService {
      * @param ystart start point y coordinate
      * @param xend goal point x coordinate
      * @param yend goal point y coordinate
+     * @param heuristic chosen heuristic function
      * @return distance of the shortest path
      */
-    public double idaStarDistance(int xstart, int ystart, int xend, int yend) {
+    public double idaStarDistance(int xstart, int ystart, int xend, int yend, String heuristic) {
         if (xstart == xend && ystart == yend) {
             return 0.;
         } else if (this.map[ystart][xstart] == -1 || this.map[yend][xend] == -1) {
             return -1.;
         }
         IDAStar idastar = new IDAStar(this.map, xstart, ystart);
-        Path path = idastar.findPathTo(xend, yend).flip();
+        Path path = idastar.findPathTo(xend, yend, heuristic).flip();
         this.idastarMap = new int[this.map.length][this.map[0].length];
         for (int x = 0; x < this.map.length; x++) {
             for (int y = 0; y < this.map[0].length; y++) {

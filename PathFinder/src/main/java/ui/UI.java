@@ -9,7 +9,10 @@ import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -32,19 +35,7 @@ public class UI extends Application {
         HBox inputPane = new HBox(10);
         mainPane.setPadding(new Insets(10, 10, 10, 10));
         Label fileLabel = new Label("Add map file");
-     //   TextField fileInput = new TextField();
         Text fileText = new Text("");
-    //    Button fileButton = new Button("Submit");
-        
-      /*  fileButton.setOnAction(e-> {
-            String fileName = fileInput.getText();
-            boolean success = service.readFile(fileName);
-            if (success) {
-                fileText.setText("File added");
-            } else {
-                fileText.setText("File not found or not readable");
-            }
-        });*/
       
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Add map file");
@@ -71,6 +62,22 @@ public class UI extends Application {
         Label yendLabel = new Label("y end: ");
         TextField yendInput = new TextField();
         
+        TilePane radio = new TilePane();
+        
+        Text heuristicText = new Text("Choose heuristics");
+        ToggleGroup tg = new ToggleGroup();
+        RadioButton uniformCost = new RadioButton("Uniform cost");
+        RadioButton diagonal = new RadioButton("Diagonal");
+        RadioButton euclidean = new RadioButton("Euclidean");
+        
+        uniformCost.setToggleGroup(tg);
+        diagonal.setToggleGroup(tg);
+        euclidean.setToggleGroup(tg);
+        
+        radio.getChildren().addAll(heuristicText, uniformCost, diagonal, euclidean);
+        
+        tg.selectToggle(diagonal);
+        
         HBox optionsPane = new HBox(10);
         VBox astarPane = new VBox(10);
         VBox idastarPane = new VBox(10);
@@ -95,8 +102,10 @@ public class UI extends Application {
             int ystart = Integer.parseInt(ystartInput.getText());
             int xend = Integer.parseInt(xendInput.getText());
             int yend = Integer.parseInt(yendInput.getText());
+            RadioButton rb = (RadioButton) tg.getSelectedToggle();
+            String heuristic = rb.getText();
             long aStartTime = System.currentTimeMillis();
-            double distance = service.aStarDistance(xstart, ystart, xend, yend);
+            double distance = service.aStarDistance(xstart, ystart, xend, yend, heuristic);
             long aEndTime = System.currentTimeMillis();
             String text = String.valueOf(distance);
             String text2 = String.valueOf(aEndTime - aStartTime);
@@ -115,8 +124,10 @@ public class UI extends Application {
             int ystart = Integer.parseInt(ystartInput.getText());
             int xend = Integer.parseInt(xendInput.getText());
             int yend = Integer.parseInt(yendInput.getText());
+            RadioButton rb = (RadioButton) tg.getSelectedToggle();
+            String heuristic = rb.getText();
             long idaStartTime = System.currentTimeMillis();
-            double distance = service.idaStarDistance(xstart, ystart, xend, yend);
+            double distance = service.idaStarDistance(xstart, ystart, xend, yend, heuristic);
             long idaEndTime = System.currentTimeMillis();
             String text = String.valueOf(distance);
             String text2 = String.valueOf(idaEndTime - idaStartTime);
@@ -133,13 +144,11 @@ public class UI extends Application {
         astarPane.getChildren().addAll(aStarButton, aStarDistance, aStarTime);
         idastarPane.getChildren().addAll(idaStarButton, idaStarDistance, idaStarTime);
         textPane.getChildren().addAll(empty, distanceDes, timeText, infoText);
-        optionsPane.getChildren().addAll(textPane, astarPane, idastarPane);
-        
-    //    inputPane.getChildren().add(chooser);
-        
+        optionsPane.getChildren().addAll(textPane, astarPane, idastarPane); 
         
         mainPane.getChildren().addAll(fileLabel, inputPane, fileText, startCoordinatesText, xstartLabel, xstartInput,
-                ystartLabel, ystartInput, endCoordinatesText, xendLabel, xendInput, yendLabel, yendInput, distanceTitle, optionsPane);       
+                ystartLabel, ystartInput, endCoordinatesText, xendLabel, xendInput, yendLabel, yendInput, 
+                radio, distanceTitle, optionsPane);       
         
         Scene inputScene = new Scene(mainPane, 700, 700);    
         primaryStage.setScene(inputScene);    

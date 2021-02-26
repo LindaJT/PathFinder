@@ -17,6 +17,7 @@ public class IDAStar {
     private int xend, yend;
     private final boolean[][] inStack;
     private boolean[][] visited;
+    private String heuristic;
     
     public IDAStar(int[][] map, int xstart, int ystart) {
         this.map = map;
@@ -33,9 +34,11 @@ public class IDAStar {
      * 
      * @param goalX goal x coordinate
      * @param goalY goal y coordinate
+     * @param heuristicF chosen heuristic function
      * @return List of nodes on the found path
      */
-    public Path findPathTo(int goalX, int goalY) {
+    public Path findPathTo(int goalX, int goalY, String heuristicF) {
+        this.heuristic = heuristicF;
         this.xend = goalX;
         this.yend = goalY;
         double threshold = this.distance(xstart, ystart);
@@ -69,14 +72,17 @@ public class IDAStar {
      * @return distance
      */
     private double distance(int dx, int dy) {
-        return Math.max((Math.abs(dx - this.xend)), Math.abs(dy - this.yend));
+        if (this.heuristic.equals("uniformCost")) {
+            return Math.max((Math.abs(dx - this.xend)), Math.abs(dy - this.yend));
+        } else if (this.heuristic.equals("diagonal")) {
+            double dmax = Math.max(Math.abs(dx - this.xend), Math.abs(dy - this.yend));
+            double dmin = Math.min(Math.abs(dx - this.xend), Math.abs(dy - this.yend));
+            return Math.sqrt(2) * dmin + (dmax - dmin);
+        } else {
+            return Math.sqrt((this.yend - dy) * (this.yend - dy) + (this.xend - dx) * (this.xend - dx));
+        }
     }
-    
-    private double distanceDiagonal(int dx, int dy) {
-        double d_max = Math.max(Math.abs(dx -this.xend), Math.abs(dy-this.yend));
-        double d_min = Math.min(Math.abs(dx -this.xend), Math.abs(dy-this.yend));
-        return Math.sqrt(2)*d_min + (d_max-d_min);
-    }
+   
 
     /**
      * Recursive function to go throw different paths
@@ -87,10 +93,9 @@ public class IDAStar {
      * @return
      */
     private double search(Node currentNode, double gscore, double threshold) {
-        System.out.println("CURRENT NODE IN SEARCH: " + currentNode.getX() + " " + currentNode.getY());
-        double f = gscore + this.distanceDiagonal(currentNode.getX(), currentNode.getY());
+        double f = gscore + this.distance(currentNode.getX(), currentNode.getY());
         currentNode.setG(gscore);
-        currentNode.setH(this.distanceDiagonal(currentNode.getX(), currentNode.getY()));
+        currentNode.setH(this.distance(currentNode.getX(), currentNode.getY()));
         this.visited[currentNode.getY()][currentNode.getX()] = true;
         if (f > threshold) {
             return f;
@@ -140,7 +145,6 @@ public class IDAStar {
      * @return list of neighbors
      */
     private NeighborsList neighborNodes(Node currentNode) {
-        System.out.println("ADDING NEIGHBORS FOR " + currentNode.getX() + " " + currentNode.getY());
         NeighborsList neighbors = new NeighborsList();
         Node node;
         boolean[][] visitedNeighbors = new boolean[3][3];
@@ -158,9 +162,8 @@ public class IDAStar {
                             cost = currentNode.getG() + 1;
                       } 
                         visitedNeighbors[y + 1][x + 1] = true;
-                        double dist = distanceDiagonal(newX, newY);
+                        double dist = distance(newX, newY);
                         node = new Node(currentNode, newX, newY, cost, dist);
-                        System.out.println("ADD NEIGHBOR: " + newX + " " + newY + " " + cost);
                         neighbors.insert(node);
                 }
             }

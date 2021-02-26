@@ -24,6 +24,7 @@ public class AStar {
     private Node[][] cameFrom;
     private double[][] costSoFar;
     private boolean[][] visited;
+    private String heuristic;
     
     public AStar(int[][] map, int xstart, int ystart) {
         
@@ -45,11 +46,13 @@ public class AStar {
      * 
      * @param x goal x coordinate
      * @param y goal y coordinate
+     * @param heuristic chosen heuristic function
      * @return List of nodes on the found path
      */
-        public Path findPathTo(int x, int y) {
+        public Path findPathTo(int x, int y, String heuristicF) {
         this.xend = x;
         this.yend = y;
+        this.heuristic = heuristicF;
         addNeigborsToOpenList();
         while (this.heap.getSize() > 0) {
             this.now = this.heap.remove(); 
@@ -81,7 +84,15 @@ public class AStar {
      * @return distance
      */
     private double distance(int dx, int dy) {
-        return Math.max((Math.abs(dx - this.xend)), Math.abs(dy - this.yend));
+        if (this.heuristic.equals("uniformCost")) {
+            return Math.max((Math.abs(dx - this.xend)), Math.abs(dy - this.yend));
+        } else if (this.heuristic.equals("diagonal")) {
+            double dmax = Math.max(Math.abs(dx - this.xend), Math.abs(dy - this.yend));
+            double dmin = Math.min(Math.abs(dx - this.xend), Math.abs(dy - this.yend));
+            return Math.sqrt(2) * dmin + (dmax - dmin);
+        } else {
+            return Math.sqrt((this.yend - dy) * (this.yend - dy) + (this.xend - dx) * (this.xend - dx));
+        }
     }
     
     /**

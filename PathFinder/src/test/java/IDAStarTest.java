@@ -31,21 +31,21 @@ public class IDAStarTest {
    
     @Test
     public void findPathToReturnsAList() {
-        Path path = ida.findPathTo(10, 2);
+        Path path = ida.findPathTo(10, 2, "uniformCost");
         assertFalse(path.getSize() == 0);
     }
     
     @Test
     public void correctNumberOfNodesOnThePath() {
-        Path path = ida.findPathTo(10, 2);
+        Path path = ida.findPathTo(10, 2, "uniformCost");
         assertEquals(9, path.getSize());
-        Path path2 = ida.findPathTo(7, 4);
+        Path path2 = ida.findPathTo(7, 4, "uniformCost");
         assertEquals(6, path2.getSize());
     }
     
     @Test
     public void pathLenghtIsCorrect() {
-        Path path2 = ida.findPathTo(7, 4);
+        Path path2 = ida.findPathTo(7, 4, "uniformCost");
         assertEquals(5,  (int) path2.getNode(0).getG());
     }
 }
