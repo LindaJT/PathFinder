@@ -18,7 +18,7 @@ algorithms-paketti:
 
 ![algorithms](algorithms.png)
 
-Ohjelman toimintaa voi testata käyttöliittymän kautta. Käyttöliittymä kertoo kummallekin algoritmille löytyikö reitti, reitin pituuden sekä reitin etsintään kuluneen ajan. Löytynyttä reittiä sekä algoritmin vierailemia ruutuja voi tarkastella results-kansion pathAStar.txt ja pathIDA.txt tiedostoista. 
+Ohjelman toimintaa voi testata käyttöliittymän kautta. Käyttöliittymä kertoo kummallekin algoritmille löytyikö reitti, reitin pituuden sekä reitin etsintään kuluneen ajan. Löytynyttä reittiä sekä algoritmin vierailemia ruutuja voi tarkastella results-kansion pathAStar.txt ja pathIDA.txt tiedostoista. Käyttöliittymässä voi myös valita, mitä heuristiikkafunktiota algoritmi käyttää (uniform cost diagonal distance, diagonal distance vai Euclidean distance) ja funktion vaikutusta suoritusaikaan voi verrata.
 
 Karttojen tulkitsiminen:
 
@@ -30,4 +30,4 @@ Karttojen tulkitsiminen:
 
 '*'	vierailtu ruutu
 
-Suorituskykytestauksessa testataan algoritmien suoritukseen kuluneita aikoja. Testaamiseen käytetään Moving AI Labin Berliinin karttaa, sekä siihen tehtyjä valmiita skenaarioita.
+Suorituskykytestauksessa testataan reitin löytymiseen kulunutta aikaa kahdella eri algritmilla, A starilla ja IDA starilla. Testauksessa tulen vertaamaan myös, vaikuttaako suoritusaikaan valittu heuristiikkafunktio. Testaamiseen käytetään Moving AI Labin Berliinin karttaa, sekä siihen tehtyjä valmiita skenaarioita.
