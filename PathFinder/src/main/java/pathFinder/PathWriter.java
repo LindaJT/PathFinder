@@ -4,8 +4,6 @@ package pathFinder;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class writes the map and path on a file
@@ -22,7 +20,8 @@ public class PathWriter {
      * @param astarMap map with path and visited nodes
      */
     public void drawAstarPath(int[][] astarMap) {
-        List<String> lines = new ArrayList<>();
+        String[] lines = new String[astarMap.length];
+        int i = 0;
         String line = "";
         for (int[] maprow : astarMap) {
             for (int mapentry : maprow) {
@@ -41,17 +40,18 @@ public class PathWriter {
                         c = "*";
                 }
             line = line + c;
-        }
-        lines.add(line);
-        line = "";
+            }
+            lines[i] = line;
+            i++;
+            line = "";
         }
         try {
             FileWriter fileWriter = new FileWriter("results/pathAStar.txt");
             BufferedWriter writer = new BufferedWriter(fileWriter);
             writer.write("A Star Path:");
             writer.newLine();
-            for (int i = 0; i < lines.size(); i++) {
-                writer.write(lines.get(i));
+            for (int z = 0; z < lines.length; z++) {
+                writer.write(lines[z]);
                 writer.newLine();
             }
             writer.close();
@@ -65,8 +65,9 @@ public class PathWriter {
      * @param idastarMap map with path and visited nodes
      */
     public void drawIdaPath(int[][] idastarMap) {
-        List<String> lines = new ArrayList<>();
+        String[] lines = new String[idastarMap.length];
         String line = "";
+        int i = 0;
         for (int[] maprow : idastarMap) {
             for (int mapentry : maprow) {
                 String c = "";
@@ -85,7 +86,8 @@ public class PathWriter {
                 }
             line = line + c;
         }
-        lines.add(line);
+        lines[i] = line;
+        i++;
         line = "";
         }
         try {
@@ -93,8 +95,8 @@ public class PathWriter {
             BufferedWriter writer = new BufferedWriter(fileWriter);
             writer.write("IDA Star Path:");
             writer.newLine();
-            for (int i = 0; i < lines.size(); i++) {
-                writer.write(lines.get(i));
+            for (int z = 0; z < lines.length; z++) {
+                writer.write(lines[z]);
                 writer.newLine();
             }
             writer.close();

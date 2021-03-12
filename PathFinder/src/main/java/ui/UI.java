@@ -7,6 +7,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
@@ -36,10 +38,28 @@ public class UI extends Application {
         mainPane.setPadding(new Insets(10, 10, 10, 10));
         Label fileLabel = new Label("Add map file");
         Text fileText = new Text("");
-      
+        
+        Button browse = new Button("Browse files");
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Add map file");
-        File file = chooser.showOpenDialog(primaryStage);
+        
+        browse.setOnAction(
+            new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(final ActionEvent e) {
+                    File file = chooser.showOpenDialog(primaryStage);
+                    if (file != null) {
+                        String fileName = file.getName();
+                        boolean success = service.readFile(fileName);
+                        if (success) {
+                            fileText.setText("File added");
+                        } else {
+                            fileText.setText("File not found or not readable");
+                        }
+                    }
+                }
+            });
+   /*     File file = chooser.showOpenDialog(primaryStage);
         if (file != null) {
             String fileName = file.getName();
             boolean success = service.readFile(fileName);
@@ -48,7 +68,7 @@ public class UI extends Application {
             } else {
                 fileText.setText("File not found or not readable");
             }
-        }
+        }*/
         
         Text startCoordinatesText = new Text("Give start coordinates: ");
         Label xstartLabel = new Label("x start: ");
@@ -98,10 +118,10 @@ public class UI extends Application {
         Text infoText = new Text(" ");
         
         aStarButton.setOnAction(e -> {
-            int xstart = Integer.parseInt(xstartInput.getText());
-            int ystart = Integer.parseInt(ystartInput.getText());
-            int xend = Integer.parseInt(xendInput.getText());
-            int yend = Integer.parseInt(yendInput.getText());
+            int xstart = Integer.parseInt(xstartInput.getText()) + 1;
+            int ystart = Integer.parseInt(ystartInput.getText()) + 1;
+            int xend = Integer.parseInt(xendInput.getText()) + 1;
+            int yend = Integer.parseInt(yendInput.getText()) + 1;
             RadioButton rb = (RadioButton) tg.getSelectedToggle();
             String heuristic = rb.getText();
             long aStartTime = System.currentTimeMillis();
@@ -120,10 +140,10 @@ public class UI extends Application {
         });
         
         idaStarButton.setOnAction(e -> {
-            int xstart = Integer.parseInt(xstartInput.getText());
-            int ystart = Integer.parseInt(ystartInput.getText());
-            int xend = Integer.parseInt(xendInput.getText());
-            int yend = Integer.parseInt(yendInput.getText());
+            int xstart = Integer.parseInt(xstartInput.getText()) + 1;
+            int ystart = Integer.parseInt(ystartInput.getText()) + 1;
+            int xend = Integer.parseInt(xendInput.getText()) + 1;
+            int yend = Integer.parseInt(yendInput.getText()) + 1;
             RadioButton rb = (RadioButton) tg.getSelectedToggle();
             String heuristic = rb.getText();
             long idaStartTime = System.currentTimeMillis();
@@ -146,7 +166,7 @@ public class UI extends Application {
         textPane.getChildren().addAll(empty, distanceDes, timeText, infoText);
         optionsPane.getChildren().addAll(textPane, astarPane, idastarPane); 
         
-        mainPane.getChildren().addAll(fileLabel, inputPane, fileText, startCoordinatesText, xstartLabel, xstartInput,
+        mainPane.getChildren().addAll(fileLabel, inputPane, browse, fileText, startCoordinatesText, xstartLabel, xstartInput,
                 ystartLabel, ystartInput, endCoordinatesText, xendLabel, xendInput, yendLabel, yendInput, 
                 radio, distanceTitle, optionsPane);       
         

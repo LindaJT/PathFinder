@@ -46,7 +46,7 @@ public class AStar {
      * 
      * @param x goal x coordinate
      * @param y goal y coordinate
-     * @param heuristic chosen heuristic function
+     * @param heuristicF chosen heuristic function
      * @return List of nodes on the found path
      */
         public Path findPathTo(int x, int y, String heuristicF) {
@@ -76,8 +76,8 @@ public class AStar {
     }
 
     /**
-     * Calculates diagonal distance (uniform cost) to the goal
-     * 
+     * Calculates distance estimate to the goal
+     * 3 different heuristic functions
      * 
      * @param dx movement to x
      * @param dy movement to y

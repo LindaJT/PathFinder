@@ -29,19 +29,19 @@ public class PathServiceTest {
     
     @Test 
     public void readFileCanReadExcistingMap() {
-        boolean value = this.service.readFile("test.txt");
+        boolean value = this.service.readFile("testFiles/test.txt");
         assertTrue(value);
     }
     
     @Test 
     public void readFileCanNotReadNonExcistingMap() {
-        boolean value = this.service.readFile("tst.txt");
+        boolean value = this.service.readFile("testFiles/tst.txt");
         assertFalse(value);
     }
     
     @Test
     public void readFileCanNotReadEmptyFile() {
-        boolean value = this.service.readFile("empty.txt");
+        boolean value = this.service.readFile("testFiles/empty.txt");
         assertFalse(value);
     }
     

@@ -48,7 +48,7 @@ public class PathService {
      * @param ystart start point y coordinate
      * @param xend goal point x coordinate
      * @param yend goal point y coordinate
-     * @param heuristic chosen heuristic funtion
+     * @param heuristic chosen heuristic function
      * @return distance of the shortest path
      */
     public Double aStarDistance(int xstart, int ystart, int xend, int yend, String heuristic) {
@@ -66,7 +66,7 @@ public class PathService {
 
         for (int i = 0; i < path.getSize(); i++) {
             Node n = path.getNode(i);
-            System.out.print("[" + n.getX() + ", " + n.getY() + ", " + n.getG() + "] ");
+       //     System.out.print("[" + n.getX() + ", " + n.getY() + ", " + n.getG() + "] ");
             this.astarMap[n.getY()][n.getX()] = 1;
         }
         
@@ -129,13 +129,11 @@ public class PathService {
         Path path = idastar.findPathTo(xend, yend, heuristic).flip();
         this.idastarMap = new int[this.map.length][this.map[0].length];
         for (int x = 0; x < this.map.length; x++) {
-            for (int y = 0; y < this.map[0].length; y++) {
-                this.idastarMap[x][y] = this.map[x][y];
-            }
+            System.arraycopy(this.map[x], 0, this.idastarMap[x], 0, this.map[0].length);
         }
         for (int i = 0; i < path.getSize(); i++) {
             Node n = path.getNode(i);
-            System.out.print("[" + n.getX() + ", " + n.getY() + ", " + n.getG() + "] ");
+   //         System.out.print("[" + n.getX() + ", " + n.getY() + ", " + n.getG() + "] ");
             this.idastarMap[n.getY()][n.getX()] = 1;
         }
         boolean[][] visited = idastar.getVisited();

@@ -64,8 +64,8 @@ public class IDAStar {
     
     
         /**
-     * Calculates distance to the goal
-     * Allows diagonal movement, but no extra cost on diagonal moves
+     * Calculates distance estimate to the goal
+     * 3 different heuristic functions
      * 
      * @param dx movement to x
      * @param dy movement to y

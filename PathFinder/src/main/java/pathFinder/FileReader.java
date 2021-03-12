@@ -2,8 +2,6 @@
 package pathFinder;
 
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -14,7 +12,7 @@ import java.util.Scanner;
 public class FileReader {
     
     private int[][] map;
-    private List<String> lines = new ArrayList<>();
+    private String[] array;
     
     public FileReader() {
         this.map = new int[0][0];
@@ -30,29 +28,39 @@ public class FileReader {
      * @return map array
      */
     public int[][] readFile(String fileName) {
-        lines.add("");
+        System.out.println("Täällä");
         int rows = 0;
         int columns = 0;
         try (Scanner reader = new Scanner(Paths.get(fileName))) {
-
-            while (reader.hasNextLine()) {
+            while(reader.hasNextLine()) {
+                reader.nextLine();
                 rows++;
-                String line = "_" + reader.nextLine() + "_";
-                columns = line.length();
-                lines.add(line);
             }
-            lines.add("");
+            array = new String[rows + 2];
+            array[0] = "";
+            int i = 1;
+            System.out.println("ROWS " + rows);
+            Scanner newReader = new Scanner(Paths.get(fileName));
+            while (newReader.hasNextLine()) {
+                String line = "_" + newReader.nextLine() + "_";
+                columns = line.length();
+                array[i] = line;
+                i++;
+            }
+            array[array.length - 1] = "";
             this.map = new int[rows + 2][columns];
         } catch (Exception e) {
             System.out.println("Virhe " + e.getMessage());
         }
-
-        for (int i = 0; i < lines.size(); i++) {
+        if (rows < 2) {
+            return this.map;
+        }
+        for (int i = 0; i < array.length; i++) {
             for (int x = 0; x < columns; x++) {
-                if (i == 0 || i == lines.size() - 1) {
+                if (i == 0 || i == array.length - 1) {
                     this.map[i][x] = -1;
                 } else {
-                    if (lines.get(i).charAt(x) == '.') {
+                    if (array[i].charAt(x) == '.') {
                     this.map[i][x] = 0;
                     } else {
                         this.map[i][x] = -1;

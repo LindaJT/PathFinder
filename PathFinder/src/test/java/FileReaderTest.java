@@ -23,7 +23,7 @@ public class FileReaderTest {
                         {-1, 0, 0, 0, -1, -1, 0, 0, -1},
                         {-1, 0, 0, 0, 0, 0, 0, 0, -1},
                         {-1, -1, -1, -1, -1, -1, -1, -1, -1}};
-        int[][] returnedMap = this.reader.readFile("test.txt");
+        int[][] returnedMap = this.reader.readFile("testFiles/test.txt");
         assertEquals(map.length, returnedMap.length);
         assertEquals(map[0].length, returnedMap[0].length);
         assertEquals(map[2][3], returnedMap[2][3]);
