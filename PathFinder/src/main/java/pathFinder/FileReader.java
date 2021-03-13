@@ -28,7 +28,6 @@ public class FileReader {
      * @return map array
      */
     public int[][] readFile(String fileName) {
-        System.out.println("Täällä");
         int rows = 0;
         int columns = 0;
         try (Scanner reader = new Scanner(Paths.get(fileName))) {
@@ -39,7 +38,6 @@ public class FileReader {
             array = new String[rows + 2];
             array[0] = "";
             int i = 1;
-            System.out.println("ROWS " + rows);
             Scanner newReader = new Scanner(Paths.get(fileName));
             while (newReader.hasNextLine()) {
                 String line = "_" + newReader.nextLine() + "_";

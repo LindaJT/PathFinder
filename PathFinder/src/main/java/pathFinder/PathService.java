@@ -66,7 +66,6 @@ public class PathService {
 
         for (int i = 0; i < path.getSize(); i++) {
             Node n = path.getNode(i);
-       //     System.out.print("[" + n.getX() + ", " + n.getY() + ", " + n.getG() + "] ");
             this.astarMap[n.getY()][n.getX()] = 1;
         }
         
@@ -79,26 +78,6 @@ public class PathService {
                 }
             }
         }
-
-     /*   System.out.println();
-        for (int[] mazerow : astarMap) {
-            for (int mazeentry : mazerow) {
-                switch (mazeentry) {
-                    case 0:
-                        System.out.print(".");
-                        break;
-                    case -1:
-                        System.out.print("@");
-                        break;
-                    case 1:
-                        System.out.println("#");
-                        break;
-                    default:
-                        System.out.println("*");
-                }
-            }
-            System.out.println();
-        }*/
         double distance = (double) path.getNode(path.getSize() - 1).getG();
         return distance;
     }
@@ -133,7 +112,6 @@ public class PathService {
         }
         for (int i = 0; i < path.getSize(); i++) {
             Node n = path.getNode(i);
-   //         System.out.print("[" + n.getX() + ", " + n.getY() + ", " + n.getG() + "] ");
             this.idastarMap[n.getY()][n.getX()] = 1;
         }
         boolean[][] visited = idastar.getVisited();
@@ -144,24 +122,6 @@ public class PathService {
                 }
             }
         }
-
-        
-   /*     System.out.println();
-        for (int[] mazerow : idastarMap) {
-            for (int mazeentry : mazerow) {
-                switch (mazeentry) {
-                    case 0:
-                        System.out.print("_");
-                        break;
-                    case -1:
-                        System.out.print("*");
-                        break;
-                    default:
-                        System.out.print("#");
-                }
-            }
-            System.out.println();
-        }*/
         double distance = (double) path.getNode(path.getSize() - 1).getG();
         return distance;
     }
