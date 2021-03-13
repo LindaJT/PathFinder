@@ -106,5 +106,11 @@ public class PathServiceTest {
         int value = (int) dist;
         assertEquals(-1, value);
     }
+    
+    @Test
+    public void canCallDrawPath() {
+        this.service.drawPath(true);
+        this.service.drawPath(false);
+    }
 
 }

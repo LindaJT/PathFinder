@@ -82,6 +82,7 @@ public class IDAStar {
             return Math.sqrt((this.yend - dy) * (this.yend - dy) + (this.xend - dx) * (this.xend - dx));
         }
     }
+    
    
 
     /**

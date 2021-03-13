@@ -54,5 +54,17 @@ public class AStarTest {
         Path path = astar.findPathTo(1, 4, "uniformCost");
         assertEquals(3, (int) path.getNode(0).getG());
     }
+    
+    @Test
+    public void worksCorrectlyWithDiagonalDistance() {
+        Path path = this.astar.findPathTo(6, 3, "diagonal");
+        assertEquals(5, (int) path.getNode(0).getG());
+    }
+    
+    @Test
+    public void worksCorrectlyWithEuclideanDistance() {
+        Path path = this.astar.findPathTo(6, 3, "euclidean");
+        assertEquals(5, (int) path.getNode(0).getG());
+    }
 
 }

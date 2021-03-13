@@ -48,4 +48,16 @@ public class IDAStarTest {
         Path path2 = ida.findPathTo(7, 4, "uniformCost");
         assertEquals(5,  (int) path2.getNode(0).getG());
     }
+    
+        @Test
+    public void worksCorrectlyWithDiagonalDistance() {
+        Path path = this.ida.findPathTo(7, 4, "diagonal");
+        assertEquals(5, (int) path.getNode(0).getG());
+    }
+    
+    @Test
+    public void worksCorrectlyWithEuclideanDistance() {
+        Path path = this.ida.findPathTo(7, 4, "euclidean");
+        assertEquals(5, (int) path.getNode(0).getG());
+    }
 }
