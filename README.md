@@ -1,6 +1,6 @@
 # PathFinder
 
-[Viikkoraportti 6](http://github.com/LindaJT/PathFinder/blob/main/dokumentaatio/Viikkoraportti6.md)
+[Käyttöohje](https://github.com/LindaJT/PathFinder/blob/main/dokumentaatio/kayttoohje.md)
 
 [Määrittelydokumentti](https://github.com/LindaJT/PathFinder/blob/main/dokumentaatio/maarittelydokumentti.md)
 

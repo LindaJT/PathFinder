@@ -2,7 +2,7 @@
 
 ### Ohjelman suorittaminen 
 
-Projektin voi ladata GitHubista zip-tiedostona. Ohjelmaa suoritetaan ajamalla komento **`./gradlew run`** PathFinder-kansiossa. Ohjelma avautuu uuteen ikkunaan. Browse files-painikkeesta voi valita ajettavan karttatiedoston. Projektissa on valmiina PathFinder-kansiossa karttatiedostoja, kuten berlin.txt, maze.txt ja test2.txt. Mikäli valittu tiedosto on oikean tyyppinen, *File added* teksti ilmestyy. Muussa tapauksessa *File not found or not readable* teksti ilmestyy ja tulisi valita toinen tiedosto. 
+Projektin voi ladata GitHubista zip-tiedostona. Ohjelmaa suoritetaan ajamalla komento **`./gradlew run`** PathFinder-kansiossa. Ohjelma avautuu uuteen ikkunaan. Browse files-painikkeesta voi valita ajettavan karttatiedoston. Projektissa on valmiina PathFinder-kansiossa karttatiedostoja, kuten berlin.txt, maze.txt ja example_map.txt. Mikäli valittu tiedosto on oikean tyyppinen, *File added* teksti ilmestyy. Muussa tapauksessa *File not found or not readable* teksti ilmestyy ja tulisi valita toinen tiedosto. 
 
 Tiedoston onnistuneen lisäämisen jälkeen, x start, y start, x end ja y end kenttiin kirjataan halutut lähtö- ja loppukoordinaatit. Heuristiikkafunktiona on oletuksena diagonaalinen etäisyys, mutta sen voi halutessaan muuttaa uniform cost tai euclidean etäisyyteen. 
 

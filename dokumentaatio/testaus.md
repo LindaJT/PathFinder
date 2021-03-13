@@ -34,6 +34,12 @@ Karttojen tulkitsiminen:
 
 '*'	vierailtu ruutu
 
+Esimerkkikartat (pohjakarttana käytetty tiedostoa example_map.txt):
+
+![A star polku](https://github.com/LindaJT/PathFinder/blob/main/dokumentaatio/astar_result.png)
+
+![IDA star polku](https://github.com/LindaJT/PathFinder/blob/main/dokumentaatio/ida_result.png)
+
 ### Suorituskykytestaus
 
 Suorituskykytestauksessa testataan reitin löytymiseen kulunutta aikaa kahdella eri algoritmilla, A starilla ja IDA starilla. Toisessa vertailussa testataan, vaikuttaako suoritusaikaan valittu heuristiikkafunktio. Testaamiseen käytetään Moving AI Labin Berliinin karttaa, sekä siihen tehtyjä valmiita skenaarioita. 
