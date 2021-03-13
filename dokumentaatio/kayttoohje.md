@@ -14,4 +14,4 @@ Ohjelma hyväksyy syötteeksi txt-muotoisia tiedostoja, jotka koostuvat .- ja @-
 
 ### Testit
 
-Testit voi suorittaa ajamalla komennon **`./gradlew test`** PathFinder-kansiossa. Testit käyttävät karttatiedostoja testFiles-kansiosta. 
+Testit voi suorittaa ajamalla komennon **`./gradlew test`** PathFinder-kansiossa. Testit käyttävät karttatiedostoja testFiles-kansiosta. Jacoco-testikattavuusraportin saa generoitua ajamalla komento **`./gradlew jacocoTestReport`** PathFinder-kansiossa.
